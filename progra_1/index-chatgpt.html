@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Proyecto</title>
+  <style>
+    :root {
+      --color-secundario: #C41946;
+      --color-texto: #fff;
+      --color-fondo: #f9f9f9;
+      --color-footer: #333;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--color-fondo);
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px 0;
+    }
+
+    .main-header {
+      background-color: var(--color-secundario);
+      color: var(--color-texto);
+      padding: 30px 0;
+      text-align: center;
+    }
+
+    .main-header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .main-header p {
+      font-size: 1.2em;
+    }
+
+    .content {
+      margin: 40px 0;
+      text-align: center;
+    }
+
+    button {
+      background-color: var(--color-secundario);
+      color: #fff;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #a8133b;
+    }
+
+    .main-footer {
+      background-color: var(--color-footer);
+      color: #bbb;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 0.9em;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Encabezado -->
+  <header class="main-header">
+    <div class="container">
+      <h1>Mi Proyecto Web</h1>
+      <p>Explorando algoritmos con JavaScript</p>
+    </div>
+  </header>
+
+  <!-- Contenido Principal -->
+  <main class="container">
+    <section class="content">
+      <h2>Bienvenido</h2>
+      <p>Haz clic en el botón para ejecutar tu primer algoritmo:</p>
+      <button id="btn-ejecutar">Ejecutar algoritmo</button>
+    </section>
+  </main>
+
+  <!-- Pie de página -->
+  <footer class="main-footer">
+    <div class="container">
+      <p>&copy; 2025 Mi Proyecto. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Aquí irán tus funciones de aprendiendo.js en el futuro
+    function mi_primer_algoritmo() {
+      alert("¡Hola! Este es tu primer algoritmo en JavaScript.");
+    }
+
+    // Asociamos el botón a la función
+    document.getElementById("btn-ejecutar").addEventListener("click", function () {
+      mi_primer_algoritmo();
+    });
+  </script>
+</body>
+</html>
