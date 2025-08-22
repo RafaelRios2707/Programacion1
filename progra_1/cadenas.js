@@ -1,4 +1,5 @@
  // Funcion contar palabras
+ // Funcion contar palabras
 function contarVocales(palabra) {
 	var contarVocales=0;
     palabra.split('').forEach(element => {
@@ -20,6 +21,7 @@ function contarVocales(palabra) {
             }
     });
     console.log('numero de vocales:',contarVocales);
+    return contarVocales
 }
 var palabra="Hola Mundo"
 contarVocales(palabra);
@@ -30,6 +32,7 @@ function contarPalabras(texto){
     	contar++;
     });
     console.log('palabras:',contar);
+    return contar;
 }
 var texto="Presta atencion Rafael"
 contarPalabras(texto)
@@ -40,7 +43,10 @@ function contarCaracteres(texto){
     	resultado++;
     });
     console.log('caracteres:',resultado);
+    return resultado;
 }
 var texto="Hola Mundo"
 contarCaracteres(texto)
+
+
 
