@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Estudiantes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="formulario">
+    <h2>Agregar Estudiante</h2>
+    <input type="text" id="input_name" placeholder="Nombre completo">
+    <input type="number" id="input_Edad" placeholder="Edad">
+    <input type="email" id="input_Correo" placeholder="Correo electrónico">
+    <input type="text" id="input_Carrera" placeholder="Carrera">
+    <input type="text" id="input_Phone" placeholder="Teléfono">
+    <button onclick="AddEstudiante()">Agregar</button>
+    <button onclick="crearTabla()">Mostrar Tabla</button>
+    
+  </div>
+
+  <p id="resultados"></p>
+  <div id="resultado"></div>
+
+  <div class="lista">
+    <h2>Estudiantes habilitados (18+)</h2>
+    <ul id="lista_habilitados"></ul>
+  </div>
+
+  <div id="tabla-container"></div>
+  <script src="lista.js"></script>
+</body>
+</html>
+
