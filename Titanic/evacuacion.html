@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulación de Botes de Rescate</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .bote { margin-bottom: 20px; border: 1px solid #ccc; padding: 10px; }
+    .bote h2 { margin-top: 0; }
+    .pasajero { margin-left: 20px; }
+  </style>
+</head>
+<body>
+  <h1>🚤 Simulación de Botes de Rescate</h1>
+  <div id="resultado"></div>
+
+  <script>
+    class Pasajero {
+      constructor(nombre, edad, genero, clase) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.genero = genero;
+        this.clase = clase;
+      }
+
+      toString() {
+        return `Nombre: ${this.nombre}, Edad: ${this.edad}, Género: ${this.genero}, Clase: ${this.clase}`;
+      }
+    }
+
+    class BoteRescate {
+      constructor(capacidadMaxima = 6) {
+        this.capacidadMaxima = capacidadMaxima;
+        this.pasajeros = [];
+      }
+
+      agregarPasajero(pasajero) {
+        if (this.pasajeros.length < this.capacidadMaxima) {
+          this.pasajeros.push(pasajero);
+          return true;
+        }
+        return false;
+      }
+    }
+
+    // Generar 20 pasajeros aleatorios
+    const clases = ["Primera", "Turista"];
+    const generos = ["F", "M"];
+    const pasajeros = [];
+
+    for (let i = 1; i <= 20; i++) {
+      const nombre = `Pasajero${i}`;
+      const edad = Math.floor(Math.random() * 60) + 1;
+      const genero = generos[Math.floor(Math.random() * generos.length)];
+      const clase = clases[Math.floor(Math.random() * clases.length)];
+      pasajeros.push(new Pasajero(nombre, edad, genero, clase));
+    }
+
+    // Ordenar por prioridad
+    pasajeros.sort((a, b) => {
+      const prioridad = (p) => {
+        if (p.genero === "F") return 3;
+        if (p.genero === "M" && p.edad < 18) return 2;
+        return 1;
+      };
+      const claseValor = (p) => (p.clase === "Primera" ? 1 : 0);
+
+      const prioA = prioridad(a);
+      const prioB = prioridad(b);
+
+      if (prioA !== prioB) return prioB - prioA;
+      return claseValor(b) - claseValor(a);
+    });
+
+    // Distribuir en botes
+    const botes = [];
+    let boteActual = new BoteRescate();
+
+    pasajeros.forEach((pasajero) => {
+      if (!boteActual.agregarPasajero(pasajero)) {
+        botes.push(boteActual);
+        boteActual = new BoteRescate();
+        boteActual.agregarPasajero(pasajero);
+      }
+    });
+    botes.push(boteActual);
+
+    // Mostrar en pantalla
+    const resultado = document.getElementById("resultado");
+    botes.forEach((bote, index) => {
+      const divBote = document.createElement("div");
+      divBote.className = "bote";
+      divBote.innerHTML = `<h2>Bote ${index + 1}</h2>`;
+      bote.pasajeros.forEach((p, i) => {
+        const divPasajero = document.createElement("div");
+        divPasajero.className = "pasajero";
+        divPasajero.textContent = `${i + 1}. ${p.toString()}`;
+        divBote.appendChild(divPasajero);
+      });
+      resultado.appendChild(divBote);
+    });
+  </script>
+</body>
+</html>
