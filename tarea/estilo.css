@@ -1,15 +1,17 @@
 :root {
-  --color-fondo: linear-gradient(135deg, #fef08a, #fcd34d); /* amarillo vibrante */
-  --color-texto: #1e293b; /* gris oscuro azulado */
-  --color-sidebar: #facc15; /* amarillo intenso */
-  --color-boton: #880808; /* rojo perrosky */
-  --color-boton-hover: #aa0c0c; /* rojo más brillante al pasar el mouse */
-  --color-boton-disabled: #d3d3d3; /* gris claro */
-  --color-borde-celda: #880808; /* borde rojo perrosky */
+  --color-fondo: #fdf6f0;              /* fondo claro cálido */
+  --color-texto: #3b1f1f;              /* marrón oscuro para buena legibilidad */
+  --color-sidebar: #d4a373;            /* beige tostado */
+  --color-boton: #880808;              /* rojo intenso protagonista */
+  --color-boton-hover: #a00a0a;        /* rojo más brillante al pasar el mouse */
+  --color-boton-disabled: #c0bebe;     /* gris cálido */
+  --color-borde-celda: #880808;        /* borde rojo intenso */
+  --color-celda-0: #fdf6f0;            /* fondo celda vacía */
+  --color-celda-1: #d4a373;            /* celda tipo 1: beige tostado */
+  --color-celda-2: #880808;            /* celda tipo 2: rojo intenso */
   --fuente-principal: 'Comic Sans MS', cursive, sans-serif;
   --radio-boton: 10px;
 }
-
 body {
   margin: 0;
   font-family: var(--fuente-principal);
@@ -58,4 +60,5 @@ button:disabled {
   background-color: var(--color-boton-disabled);
   cursor: not-allowed;
 }
+
 
