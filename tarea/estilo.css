@@ -1,13 +1,13 @@
 :root {
-  --color-fondo: linear-gradient(135deg, #ffeaa7, #fab1a0);
-  --color-texto: #2d3436;
-  --color-sidebar: #fdcb6e;
-  --color-boton: #00cec9;
-  --color-boton-hover: #0984e3;
-  --color-boton-disabled: #b2bec3;
-  --color-borde-celda: #d63031;
+  --color-fondo: linear-gradient(135deg, #fef08a, #fcd34d); /* amarillo vibrante */
+  --color-texto: #1e293b; /* gris oscuro azulado */
+  --color-sidebar: #facc15; /* amarillo intenso */
+  --color-boton: #880808; /* rojo perrosky */
+  --color-boton-hover: #aa0c0c; /* rojo más brillante al pasar el mouse */
+  --color-boton-disabled: #d3d3d3; /* gris claro */
+  --color-borde-celda: #880808; /* borde rojo perrosky */
   --fuente-principal: 'Comic Sans MS', cursive, sans-serif;
-  --radio-boton: 8px;
+  --radio-boton: 10px;
 }
 
 body {
@@ -58,3 +58,4 @@ button:disabled {
   background-color: var(--color-boton-disabled);
   cursor: not-allowed;
 }
+
