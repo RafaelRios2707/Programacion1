@@ -16,12 +16,12 @@ function dibujarCero(x, y) {
 }
 
 function dibujarUno(x, y) {
-  ctx.fillStyle = '#00bcd4';
+  ctx.fillStyle = '#880808';
   ctx.fillRect(x, y, cellSize, cellSize);
 }
 
 function dibujarDos(x, y) {
-  ctx.fillStyle = '#ff7043';
+  ctx.fillStyle = '#000080';
   ctx.fillRect(x, y, cellSize, cellSize);
 }
 
@@ -171,3 +171,4 @@ incrementBtn.disabled = false;
 clearBtn.addEventListener('click', ()=>{matriz = new Matrix(rows, cols, 0); dibujarMatriz();});
 
 dibujarMatriz();
+
