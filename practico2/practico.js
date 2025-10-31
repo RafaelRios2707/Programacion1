@@ -43,163 +43,159 @@ function mostrar(titulo, matriz, extra = "") {
   resultado.innerHTML = html;
 }
 
-// Ejercicio 1: suma total
+function mostrarVariasMatrices(titulo, matriz1, matriz2, textoExtra = "") {
+  const resultado = document.getElementById("resultado");
+  let html = `<h3>${titulo}</h3>`;
+
+  html += "<h4>Matriz 1</h4><table>";
+  for (let i = 0; i < matriz1.length; i++) {
+    html += "<tr>";
+    for (let j = 0; j < matriz1[i].length; j++) {
+      html += `<td>${matriz1[i][j]}</td>`;
+    }
+    html += "</tr>";
+  }
+  html += "</table><br>";
+
+  html += "<h4>Matriz 2</h4><table>";
+  for (let i = 0; i < matriz2.length; i++) {
+    html += "<tr>";
+    for (let j = 0; j < matriz2[i].length; j++) {
+      html += `<td>${matriz2[i][j]}</td>`;
+    }
+    html += "</tr>";
+  }
+  html += "</table><br>";
+
+  if (textoExtra) {
+    html += `<p>${textoExtra}</p>`;
+  }
+
+  resultado.innerHTML = html;
+}
+
+// Ejercicio 1
 function ejercicio1() {
   let m = new Matrix(10, 10);
   m.llenarAleatorio(1, 100);
   let suma = 0;
-
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      suma += m.datos[i][j];
-    }
-  }
-
+  for (let i = 0; i < 10; i++) for (let j = 0; j < 10; j++) suma += m.datos[i][j];
   mostrar("Ejercicio 1", m.datos, "Suma total: " + suma);
 }
 
-// Ejercicio 2: mayor y menor
+// Ejercicio 2
 function ejercicio2() {
   let m = new Matrix(10, 10);
   m.llenarAleatorio(1, 100);
   let mayor = m.datos[0][0];
   let menor = m.datos[0][0];
-
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      let valor = m.datos[i][j];
-      if (valor > mayor) mayor = valor;
-      if (valor < menor) menor = valor;
-    }
+  for (let i = 0; i < 10; i++) for (let j = 0; j < 10; j++) {
+    let valor = m.datos[i][j];
+    if (valor > mayor) mayor = valor;
+    if (valor < menor) menor = valor;
   }
-
   mostrar("Ejercicio 2", m.datos, `Mayor: ${mayor} - Menor: ${menor}`);
 }
 
-// Ejercicio 3: promedio
+// Ejercicio 3
 function ejercicio3() {
   let m = new Matrix(10, 10);
   m.llenarAleatorio(1, 100);
   let suma = 0;
-
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      suma += m.datos[i][j];
-    }
-  }
-
+  for (let i = 0; i < 10; i++) for (let j = 0; j < 10; j++) suma += m.datos[i][j];
   let promedio = suma / 100;
   mostrar("Ejercicio 3", m.datos, "Promedio: " + promedio.toFixed(2));
 }
 
-// Ejercicio 4: contar número
+// Ejercicio 4
 function ejercicio4() {
   let m = new Matrix(10, 10);
   m.llenarAleatorio(1, 5);
   let buscar = 3;
   let contar = 0;
-
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      if (m.datos[i][j] === buscar) {
-        contar++;
-      }
-    }
+  for (let i = 0; i < 10; i++) for (let j = 0; j < 10; j++) {
+    if (m.datos[i][j] === buscar) contar++;
   }
-
   mostrar("Ejercicio 4", m.datos, `El número ${buscar} aparece ${contar} veces`);
 }
 
-// Ejercicio 5: invertir filas
+// Ejercicio 5
 function ejercicio5() {
   let m = new Matrix(10, 10);
   m.llenarAleatorio(1, 10);
-
-  for (let i = 0; i < 10; i++) {
-    m.datos[i].reverse();
-  }
-
-  mostrar("Ejercicio 5", m.datos, "Filas invertidas");
+  let original = JSON.parse(JSON.stringify(m.datos));
+  for (let i = 0; i < 10; i++) m.datos[i].reverse();
+  mostrarVariasMatrices("Ejercicio 5", original, m.datos, "Filas invertidas");
 }
 
-// Ejercicio 6: rotar 90 grados
+// Ejercicio 6
 function ejercicio6() {
   let m = new Matrix(10, 10);
   m.llenarAleatorio(1, 9);
-  let nueva = new Matrix(10, 10);
-
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      nueva.datos[j][9 - i] = m.datos[i][j];
-    }
+  let rotada = new Matrix(10, 10);
+  for (let i = 0; i < 10; i++) for (let j = 0; j < 10; j++) {
+    rotada.datos[j][9 - i] = m.datos[i][j];
   }
-
-  mostrar("Ejercicio 6", nueva.datos, "Rotada 90°");
+  mostrarVariasMatrices("Ejercicio 6", m.datos, rotada.datos, "Rotada 90°");
 }
 
-// Ejercicio 7: transpuesta
+// Ejercicio 7
 function ejercicio7() {
   let m = new Matrix(10, 10);
   m.llenarAleatorio(1, 9);
   let transpuesta = new Matrix(10, 10);
-
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      transpuesta.datos[j][i] = m.datos[i][j];
-    }
+  for (let i = 0; i < 10; i++) for (let j = 0; j < 10; j++) {
+    transpuesta.datos[j][i] = m.datos[i][j];
   }
-
-  mostrar("Ejercicio 7", transpuesta.datos, "Transpuesta");
+  mostrarVariasMatrices("Ejercicio 7", m.datos, transpuesta.datos, "Transpuesta");
 }
 
-// Ejercicio 8: multiplicar matrices
+// Ejercicio 8
 function ejercicio8() {
   let a = new Matrix(10, 10);
   let b = new Matrix(10, 10);
   a.llenarAleatorio(1, 5);
   b.llenarAleatorio(1, 5);
   let r = new Matrix(10, 10);
-
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      let suma = 0;
-      for (let k = 0; k < 10; k++) {
-        suma += a.datos[i][k] * b.datos[k][j];
-      }
-      r.datos[i][j] = suma;
-    }
+  for (let i = 0; i < 10; i++) for (let j = 0; j < 10; j++) {
+    let suma = 0;
+    for (let k = 0; k < 10; k++) suma += a.datos[i][k] * b.datos[k][j];
+    r.datos[i][j] = suma;
   }
 
-  mostrar("Ejercicio 8", r.datos, "Producto de A × B");
+  const resultado = document.getElementById("resultado");
+  resultado.innerHTML = "";
+  mostrarVariasMatrices("Ejercicio 8", a.datos, b.datos, "Producto de A × B:");
+  let html = resultado.innerHTML;
+  html += "<h4>Resultado</h4><table>";
+  for (let i = 0; i < r.datos.length; i++) {
+    html += "<tr>";
+    for (let j = 0; j < r.datos[i].length; j++) {
+      html += `<td>${r.datos[i][j]}</td>`;
+    }
+    html += "</tr>";
+  }
+  html += "</table>";
+  resultado.innerHTML = html;
 }
 
-// Ejercicio 9: diagonal principal
+// Ejercicio 9
 function ejercicio9() {
   let m = new Matrix(10, 10);
   m.llenarAleatorio(1, 9);
   let diagonal = [];
-
-  for (let i = 0; i < 10; i++) {
-    diagonal.push(m.datos[i][i]);
-  }
-
+  for (let i = 0; i < 10; i++) diagonal.push(m.datos[i][i]);
   mostrar("Ejercicio 9", m.datos, "Diagonal principal: [" + diagonal.join(", ") + "]");
 }
 
-// Ejercicio 10: diagonal secundaria
+// Ejercicio 10
 function ejercicio10() {
   let m = new Matrix(10, 10);
   m.llenarAleatorio(1, 9);
   let diagonal = [];
-
-  for (let i = 0; i < 10; i++) {
-    diagonal.push(m.datos[i][9 - i]);
-  }
-
+  for (let i = 0; i < 10; i++) diagonal.push(m.datos[i][9 - i]);
   mostrar("Ejercicio 10", m.datos, "Diagonal secundaria: [" + diagonal.join(", ") + "]");
 }
-
-// Ejercicio 11: suma por fila
 function ejercicio11() {
   let m = new Matrix(10, 10);
   m.llenarAleatorio(1, 10);
@@ -215,8 +211,6 @@ function ejercicio11() {
 
   mostrar("Ejercicio 11", m.datos, "Suma por fila: [" + sumas.join(", ") + "]");
 }
-
-// Ejercicio 12: suma por columna
 function ejercicio12() {
   let m = new Matrix(10, 10);
   m.llenarAleatorio(1, 10);
@@ -230,36 +224,32 @@ function ejercicio12() {
 
   mostrar("Ejercicio 12", m.datos, "Suma por columna: [" + sumas.join(", ") + "]");
 }
-
-// Ejercicio 13: transpuesta en el mismo lugar
 function ejercicio13() {
   let m = new Matrix(10, 10);
   m.llenarAleatorio(1, 9);
+  let original = JSON.parse(JSON.stringify(m.datos));
 
   for (let i = 0; i < 10; i++) {
     for (let j = i + 1; j < 10; j++) {
       let temp = m.datos[i][j];
       m.datos[i][j] = m.datos[j][i];
       m.datos[j][i] = temp;
-    }}}
-    mostrar("Ejercicio 13", m.datos, "Transpuesta en el mismo lugar");
+    }
+  }
 
+  mostrarVariasMatrices("Ejercicio 13", original, m.datos, "Transpuesta en el mismo lugar");
+}
 function ejercicio14() {
   let m = new Matrix(10, 10);
 
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 10; j++) {
-      if (i === j) {
-        m.datos[i][j] = 1;
-      } else {
-        m.datos[i][j] = 0;
-      }
+      m.datos[i][j] = (i === j) ? 1 : 0;
     }
   }
 
-  mostrar("Ejercicio 14", m.datos, "Matriz identidad (1 en diagonal principal)");
+  mostrar("Ejercicio 14", m.datos, "Matriz identidad (1 en la diagonal principal)");
 }
-
 function ejercicio15() {
   let m = new Matrix(10, 10);
   m.llenarAleatorio(1, 5);
@@ -276,5 +266,6 @@ function ejercicio15() {
   let mensaje = simetrica ? "Sí es simétrica" : "No es simétrica";
   mostrar("Ejercicio 15", m.datos, mensaje);
 }
+
 
 console.log("Práctico de Matrices en JavaScript cargado.");
