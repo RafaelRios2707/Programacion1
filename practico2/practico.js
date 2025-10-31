@@ -269,3 +269,4 @@ function ejercicio15() {
 
 
 console.log("Práctico de Matrices en JavaScript cargado.");
+
