@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Práctico de Matrices</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Consolas, monospace;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #880808;
+      margin-bottom: 30px;
+    }
+
+    .botones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #880808;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #aa0a0a;
+    }
+
+    #resultado {
+      background-color: #111;
+      color: #f0f0f0;
+      padding: 15px;
+      border: 1px solid #880808;
+      font-size: 14px;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    td {
+      border: 1px solid #880808;
+      padding: 5px 8px;
+      text-align: center;
+      min-width: 30px;
+    }
+
+    .texto {
+      margin-bottom: 10px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Práctico de Matrices en JavaScript</h1>
+
+  <div class="botones">
+    <button onclick="ejercicio1()">Ejercicio 1</button>
+    <button onclick="ejercicio2()">Ejercicio 2</button>
+    <button onclick="ejercicio3()">Ejercicio 3</button>
+    <button onclick="ejercicio4()">Ejercicio 4</button>
+    <button onclick="ejercicio5()">Ejercicio 5</button>
+    <button onclick="ejercicio6()">Ejercicio 6</button>
+    <button onclick="ejercicio7()">Ejercicio 7</button>
+    <button onclick="ejercicio8()">Ejercicio 8</button>
+    <button onclick="ejercicio9()">Ejercicio 9</button>
+    <button onclick="ejercicio10()">Ejercicio 10</button>
+    <button onclick="ejercicio11()">Ejercicio 11</button>
+    <button onclick="ejercicio12()">Ejercicio 12</button>
+    <button onclick="ejercicio13()">Ejercicio 13</button>
+    <button onclick="ejercicio14()">Ejercicio 14</button>
+    <button onclick="ejercicio15()">Ejercicio 15</button>
+  </div>
+
+  <div id="resultado">Haz clic en un ejercicio para ver el resultado aquí.</div>
+
+  <script>
+    function mostrar(titulo, matriz = null, extra = "") {
+      const salida = document.getElementById("resultado");
+      let html = `<div class="texto"><strong>${titulo}</strong></div>`;
+
+      if (matriz) {
+        html += `<table>`;
+        for (let fila of matriz) {
+          html += `<tr>` + fila.map(c => `<td>${c}</td>`).join("") + `</tr>`;
+        }
+        html += `</table>`;
+      }
+
+      if (extra) {
+        html += `<div class="texto">${extra.replace(/\n/g, "<br>")}</div>`;
+      }
+
+      salida.innerHTML = html;
+    }
+  </script>
+
+  <script src="practico.js"></script>
+</body>
+</html>
+
+
+
