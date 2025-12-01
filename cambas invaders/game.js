@@ -84,13 +84,6 @@ function iniciarJuego() {
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Space' || e.code === ' ') {
     player.disparar();
-
-    const carnet = prompt("Ingrese su carnet");
-    if (carnet % 2 === 0) {
-      console.log("El carnet es par");
-    } else {
-      console.log("El carnet es impar");
-    }
   } else if (e.code === 'ArrowLeft') {
     player.mover(-1);
   } else if (e.code === 'ArrowRight') {
@@ -117,3 +110,4 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
