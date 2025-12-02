@@ -95,6 +95,7 @@ function iniciarJuego() {
 
   setInterval(() => {
     enemigo.disparar();
+    console.log("BalasAlien después del disparo:", balasAlien.length);
   }, 500);
 
   gameLoop();
@@ -119,21 +120,36 @@ function gameLoop() {
     matriz.dibujar(ctx);
   }
 
-  balasNave.forEach(b => {
+  // mover y dibujar balas
+  for (let i = 0; i < balasNave.length; i++) {
+    const b = balasNave[i];
     b.mover();
     b.dibujar(ctx);
-  });
-
-  balasAlien.forEach(b => {
+  }
+  for (let i = 0; i < balasAlien.length; i++) {
+    const b = balasAlien[i];
     b.mover();
     b.dibujar(ctx);
-  });
+  }
 
-  balasNave = balasNave.filter(b => !b.fueraDelCanvas(canvas));
-  balasAlien = balasAlien.filter(b => !b.fueraDelCanvas(canvas));
+  // limpiar balas fuera de pantalla SIN romper referencia
+  for (let i = balasNave.length - 1; i >= 0; i--) {
+    if (balasNave[i].fueraDelCanvas(canvas)) {
+      balasNave.splice(i, 1);
+    }
+  }
+  for (let i = balasAlien.length - 1; i >= 0; i--) {
+    if (balasAlien[i].fueraDelCanvas(canvas)) {
+      balasAlien.splice(i, 1);
+    }
+  }
+
+  console.log("Loop: balasNave =", balasNave.length, "balasAlien =", balasAlien.length);
 
   requestAnimationFrame(gameLoop);
 }
+
+
 
 
 
