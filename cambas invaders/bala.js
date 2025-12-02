@@ -17,15 +17,17 @@ export default class Bala {
   }
 
   dibujar(ctx) {
-  ctx.fillStyle = '#0f0'; // verde para probar
+  ctx.fillStyle = this.tipo === 'nave' ? '#0f0' : '#f00'; // verde para nave, rojo para alien
   ctx.fillRect(this.x, this.y, this.width, this.height);
   console.log("Dibujando bala en:", this.x, this.y);
 }
+
 
 
   fueraDelCanvas(canvas) {
     return this.y < 0 || this.y > canvas.height;
   }
 }
+
 
 
