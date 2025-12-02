@@ -15,7 +15,7 @@ class BalaEnemigo {
 
   dibujar(ctx) {
     const img = new Image();
-    img.src = 'assets/icon2.png'; // bala con icon2
+    img.src = 'assets/icon2.png';
     ctx.drawImage(img, this.x, this.y, this.width, this.height);
   }
 
@@ -32,7 +32,6 @@ export default class Enemigo {
     this.celdaSize = celdaSize;
     this.balasAlien = balasAlien;
 
-    // colocar algunos aliens
     for (let k = 3; k > 0; k--) {
       const i = Math.floor(Math.random() * columnas);
       const j = Math.floor(Math.random() * (filas - 7));
@@ -43,7 +42,7 @@ export default class Enemigo {
   disparar() {
     for (let j = 0; j < this.filas; j++) {
       for (let i = 0; i < this.columnas; i++) {
-        if (this.matriz.obtener(i, j) === 'alien' && Math.random() < 0.05) {
+        if (this.matriz.obtener(i, j) === 'alien' && Math.random() < 0.3) {
           const px = i * this.celdaSize + this.celdaSize / 2 - 10;
           const py = j * this.celdaSize + this.celdaSize;
           this.balasAlien.push(new BalaEnemigo(px, py, 1, 'alien'));
@@ -53,11 +52,10 @@ export default class Enemigo {
   }
 
   mover() {
-    // recorrer toda la matriz y mover aliens con baja probabilidad
     for (let j = this.filas - 1; j >= 0; j--) {
       for (let i = 0; i < this.columnas; i++) {
         if (this.matriz.obtener(i, j) === 'alien') {
-          if (Math.random() < 0.02) { // 2% chance de moverse cada frame
+          if (Math.random() < 0.02) {
             const nuevaX = i + (Math.random() < 0.5 ? -1 : 1);
             const nuevaY = j + (Math.random() < 0.1 ? 1 : 0);
 
