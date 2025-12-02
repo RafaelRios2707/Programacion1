@@ -31,6 +31,9 @@ export default class Player {
       const px = pos.i * this.celdaSize + this.celdaSize / 2 - 3;
       const py = pos.j * this.celdaSize;
       this.balasNave.push(new Bala(px, py, -1, 'nave'));
+      console.log("Jugador disparó");
+      console.log("BalasNave:", this.balasNave.length);
+
     }
   }
 
@@ -57,3 +60,4 @@ export default class Player {
 
 
   
+
