@@ -1,3 +1,5 @@
+console.log("game.js cargado correctamente");
+
 import Player from "./player.js";
 import Enemigo from "./enemigo.js";
 
@@ -140,6 +142,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
