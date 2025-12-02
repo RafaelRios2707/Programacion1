@@ -72,6 +72,8 @@ class Matriz {
           const naveImg = new Image();
           naveImg.src = player.imagenActual;
           ctx.drawImage(naveImg, px, py, celdaSize, celdaSize);
+        } else if (tipo === 'alien' && alienCargado) {
+          ctx.drawImage(alienImg, px, py, celdaSize, celdaSize);
         }
       }
     }
@@ -84,6 +86,7 @@ function iniciarJuego() {
   player = new Player(matriz, columnas, filas, celdaSize, balasNave);
   enemigo = new Enemigo(matriz, filas, columnas, celdaSize, balasAlien);
 
+  // disparo controlado cada segundo
   setInterval(() => {
     enemigo.disparar();
   }, 1000);
@@ -107,11 +110,10 @@ function gameLoop() {
   }
 
   if (matriz) {
-    matriz.dibujar(ctx); // aquí se dibujan los aliens desde la matriz
+    matriz.dibujar(ctx);
   }
 
-  enemigo.mover();    // mueve aliens dentro de la matriz
-  enemigo.disparar(); // permite que disparen
+  enemigo.mover(); // movimiento lento dentro de la matriz
 
   for (let i = 0; i < balasNave.length; i++) {
     balasNave[i].mover();
@@ -124,12 +126,18 @@ function gameLoop() {
   }
 
   for (let i = balasNave.length - 1; i >= 0; i--) {
-    if (balasNave[i].fueraDelCanvas(canvas)) balasNave.splice(i, 1);
+    if (balasNave[i].fueraDelCanvas(canvas)) {
+      balasNave.splice(i, 1);
+    }
   }
 
   for (let i = balasAlien.length - 1; i >= 0; i--) {
-    if (balasAlien[i].fueraDelCanvas(canvas)) balasAlien.splice(i, 1);
+    if (balasAlien[i].fueraDelCanvas(canvas)) {
+      balasAlien.splice(i, 1);
+    }
   }
 
   requestAnimationFrame(gameLoop);
 }
+
+
