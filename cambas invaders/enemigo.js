@@ -9,7 +9,9 @@ class BalaEnemigo {
     this.height = 20;
   }
 
-  mover() { this.y += this.velocidad * this.direccion; }
+  mover() {
+    this.y += this.velocidad * this.direccion;
+  }
 
   dibujar(ctx) {
     const img = new Image();
@@ -30,24 +32,24 @@ export default class Enemigo {
     this.celdaSize = celdaSize;
     this.balasAlien = balasAlien;
 
-    // Cooldown interno para limitar ráfagas (ms)
     this.lastShot = 0;
-    this.shotCooldown = 1000; // 1s
+    this.shotCooldown = 1000; // milisegundos
 
     // colocar algunos aliens iniciales
     for (let k = 3; k > 0; k--) {
       const i = Math.floor(Math.random() * columnas);
       const j = Math.floor(Math.random() * (filas - 7));
-      if (!this.matriz.obtener(i, j)) this.matriz.colocar(i, j, 'alien');
+      if (!this.matriz.obtener(i, j)) {
+        this.matriz.colocar(i, j, 'alien');
+      }
     }
   }
 
   disparar() {
     const now = Date.now();
-    if (now - this.lastShot < this.shotCooldown) return; // respeta cooldown
+    if (now - this.lastShot < this.shotCooldown) return;
     this.lastShot = now;
 
-    // recorre la matriz y dispara con probabilidad moderada
     for (let j = 0; j < this.filas; j++) {
       for (let i = 0; i < this.columnas; i++) {
         if (this.matriz.obtener(i, j) === 'alien' && Math.random() < 0.25) {
@@ -60,7 +62,6 @@ export default class Enemigo {
   }
 
   mover() {
-    // Snapshot para decidir movimientos sin pisarse
     const snapshot = [];
     for (let j = 0; j < this.filas; j++) {
       snapshot[j] = [];
@@ -69,24 +70,23 @@ export default class Enemigo {
       }
     }
 
-    // Lista de movimientos a aplicar
     const movimientos = [];
+    const limiteY = Math.floor(this.filas * 2 / 3);
 
     for (let j = this.filas - 1; j >= 0; j--) {
       for (let i = 0; i < this.columnas; i++) {
         if (snapshot[j][i] === 'alien') {
-          // baja probabilidad por frame
           if (Math.random() < 0.03) {
             const dx = Math.random() < 0.5 ? -1 : 1;
-            const dy = Math.random() < 0.15 ? 1 : 0; // a veces baja
+            const dy = Math.random() < 0.15 ? 1 : 0;
             const nuevaX = i + dx;
             const nuevaY = j + dy;
 
             if (
               nuevaX >= 0 && nuevaX < this.columnas &&
-              nuevaY >= 0 && nuevaY < this.filas &&
-              snapshot[nuevaY][nuevaX] === null && // evita colisiones en snapshot
-              this.matriz.obtener(nuevaX, nuevaY) === null // confirma libre en actual
+              nuevaY >= 0 && nuevaY <= limiteY &&
+              snapshot[nuevaY][nuevaX] === null &&
+              this.matriz.obtener(nuevaX, nuevaY) === null
             ) {
               movimientos.push({ fromX: i, fromY: j, toX: nuevaX, toY: nuevaY });
             }
@@ -95,7 +95,6 @@ export default class Enemigo {
       }
     }
 
-    // Aplica movimientos calculados
     for (const m of movimientos) {
       this.matriz.colocar(m.fromX, m.fromY, null);
       this.matriz.colocar(m.toX, m.toY, 'alien');
