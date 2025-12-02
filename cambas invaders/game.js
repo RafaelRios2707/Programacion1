@@ -99,6 +99,7 @@ function iniciarJuego() {
   }, 1000);
 
   gameLoop();
+  
 }
 
 document.addEventListener('keydown', (e) => {
@@ -143,11 +144,12 @@ function gameLoop() {
       balasAlien.splice(i, 1);
     }
   }
-
+  
   console.log("Loop: balasNave =", balasNave.length, "balasAlien =", balasAlien.length);
-
+  enemigo.mover();
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
