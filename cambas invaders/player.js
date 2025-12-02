@@ -1,5 +1,4 @@
 import Bala from "./bala.js";
-console.log("bala importado",Bala);  
 
 export default class Player {
   constructor(matriz, columnas, filas, celdaSize, balasNave) {
@@ -10,8 +9,9 @@ export default class Player {
     this.balasNave = balasNave;
 
     this.matriz.colocar(6, 11, 'nave');
-
     this.imagenActual = 'assets/nave_derecha.png';
+
+    setInterval(() => this.disparar(), 2000);
   }
 
   encontrarNave() {
@@ -34,8 +34,8 @@ export default class Player {
     }
   }
 
-  mover(direccion) 
-    {const pos = this.encontrarNave();
+  mover(direccion) {
+    const pos = this.encontrarNave();
     if (pos) {
       const nuevaX = pos.i + direccion;
       const j = pos.j;
@@ -45,13 +45,15 @@ export default class Player {
         this.matriz.colocar(nuevaX, j, 'nave');
 
         if (direccion === -1) {
-            this.imagenActual = 'assets/nave_izquierda.png';
+          this.imagenActual = 'assets/nave_izquierda.png';
         } else {
-            this.imagenActual = 'assets/nave_derecha.png';
+          this.imagenActual = 'assets/nave_derecha.png';
         }
       }
     }
   }
 }
+
+
 
   
