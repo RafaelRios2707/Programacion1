@@ -19,15 +19,15 @@ let fondoCargado = false;
 alienImg.src = 'assets/alien.png';
 fondoImg.src = 'assets/fondo.png';
 
-alienImg.onload = () => { 
-  alienCargado = true; 
-  console.log("Alien cargado"); 
-  verificarCarga(); 
+alienImg.onload = () => {
+  alienCargado = true;
+  console.log("Alien cargado");
+  verificarCarga();
 };
-fondoImg.onload = () => { 
-  fondoCargado = true; 
-  console.log("Fondo cargado"); 
-  verificarCarga(); 
+fondoImg.onload = () => {
+  fondoCargado = true;
+  console.log("Fondo cargado");
+  verificarCarga();
 };
 
 let matriz;
@@ -89,16 +89,21 @@ class Matriz {
 function iniciarJuego() {
   console.log("Iniciando juego...");
   matriz = new Matriz(filas, columnas);
+
   player = new Player(matriz, columnas, filas, celdaSize, balasNave);
   console.log("Player creado:", player);
 
   enemigo = new Enemigo(matriz, filas, columnas, celdaSize, balasAlien);
   console.log("Enemigo creado:", enemigo);
 
+  // Verificar referencias compartidas
+  console.log("¿balasNave === player.balasNave?", balasNave === player.balasNave);
+  console.log("¿balasAlien === enemigo.balasAlien?", balasAlien === enemigo.balasAlien);
+
   setInterval(() => {
     console.log("Intentando disparo enemigo...");
     enemigo.disparar();
-    console.log("BalasAlien actuales:", balasAlien.length);
+    console.log("BalasAlien después del disparo:", balasAlien.length);
   }, 500);
 
   gameLoop();
@@ -126,13 +131,14 @@ function gameLoop() {
     matriz.dibujar(ctx);
   }
 
-  balasNave.forEach(b => { 
-    b.mover(); 
-    b.dibujar(ctx); 
+  balasNave.forEach(b => {
+    b.mover();
+    b.dibujar(ctx);
   });
-  balasAlien.forEach(b => { 
-    b.mover(); 
-    b.dibujar(ctx); 
+
+  balasAlien.forEach(b => {
+    b.mover();
+    b.dibujar(ctx);
   });
 
   console.log("Loop: balasNave =", balasNave.length, "balasAlien =", balasAlien.length);
