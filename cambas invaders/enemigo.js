@@ -9,9 +9,7 @@ class BalaEnemigo {
     this.height = 20;
   }
 
-  mover() {
-    this.y += this.velocidad * this.direccion;
-  }
+  mover() { this.y += this.velocidad * this.direccion; }
 
   dibujar(ctx) {
     const img = new Image();
@@ -32,17 +30,27 @@ export default class Enemigo {
     this.celdaSize = celdaSize;
     this.balasAlien = balasAlien;
 
+    // Cooldown interno para limitar ráfagas (ms)
+    this.lastShot = 0;
+    this.shotCooldown = 1000; // 1s
+
+    // colocar algunos aliens iniciales
     for (let k = 3; k > 0; k--) {
       const i = Math.floor(Math.random() * columnas);
       const j = Math.floor(Math.random() * (filas - 7));
-      this.matriz.colocar(i, j, 'alien');
+      if (!this.matriz.obtener(i, j)) this.matriz.colocar(i, j, 'alien');
     }
   }
 
   disparar() {
+    const now = Date.now();
+    if (now - this.lastShot < this.shotCooldown) return; // respeta cooldown
+    this.lastShot = now;
+
+    // recorre la matriz y dispara con probabilidad moderada
     for (let j = 0; j < this.filas; j++) {
       for (let i = 0; i < this.columnas; i++) {
-        if (this.matriz.obtener(i, j) === 'alien' && Math.random() < 0.3) {
+        if (this.matriz.obtener(i, j) === 'alien' && Math.random() < 0.25) {
           const px = i * this.celdaSize + this.celdaSize / 2 - 10;
           const py = j * this.celdaSize + this.celdaSize;
           this.balasAlien.push(new BalaEnemigo(px, py, 1, 'alien'));
@@ -52,21 +60,45 @@ export default class Enemigo {
   }
 
   mover() {
+    // Snapshot para decidir movimientos sin pisarse
+    const snapshot = [];
+    for (let j = 0; j < this.filas; j++) {
+      snapshot[j] = [];
+      for (let i = 0; i < this.columnas; i++) {
+        snapshot[j][i] = this.matriz.obtener(i, j);
+      }
+    }
+
+    // Lista de movimientos a aplicar
+    const movimientos = [];
+
     for (let j = this.filas - 1; j >= 0; j--) {
       for (let i = 0; i < this.columnas; i++) {
-        if (this.matriz.obtener(i, j) === 'alien') {
-          if (Math.random() < 0.02) {
-            const nuevaX = i + (Math.random() < 0.5 ? -1 : 1);
-            const nuevaY = j + (Math.random() < 0.1 ? 1 : 0);
+        if (snapshot[j][i] === 'alien') {
+          // baja probabilidad por frame
+          if (Math.random() < 0.03) {
+            const dx = Math.random() < 0.5 ? -1 : 1;
+            const dy = Math.random() < 0.15 ? 1 : 0; // a veces baja
+            const nuevaX = i + dx;
+            const nuevaY = j + dy;
 
-            if (this.matriz.enRango(nuevaX, nuevaY) && !this.matriz.obtener(nuevaX, nuevaY)) {
-              this.matriz.colocar(i, j, null);
-              this.matriz.colocar(nuevaX, nuevaY, 'alien');
+            if (
+              nuevaX >= 0 && nuevaX < this.columnas &&
+              nuevaY >= 0 && nuevaY < this.filas &&
+              snapshot[nuevaY][nuevaX] === null && // evita colisiones en snapshot
+              this.matriz.obtener(nuevaX, nuevaY) === null // confirma libre en actual
+            ) {
+              movimientos.push({ fromX: i, fromY: j, toX: nuevaX, toY: nuevaY });
             }
           }
         }
       }
     }
+
+    // Aplica movimientos calculados
+    for (const m of movimientos) {
+      this.matriz.colocar(m.fromX, m.fromY, null);
+      this.matriz.colocar(m.toX, m.toY, 'alien');
+    }
   }
 }
-
