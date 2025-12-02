@@ -8,6 +8,7 @@ export default class Enemigo {
     this.celdaSize = celdaSize;
     this.balasAlien = balasAlien;
 
+    // coloca 3 aliens en posiciones aleatorias
     for (let k = 3; k > 0; k--) {
       this.matriz.colocar(
         Math.floor(Math.random() * columnas),
@@ -24,12 +25,8 @@ export default class Enemigo {
           const px = i * this.celdaSize + this.celdaSize / 2 - 3;
           const py = j * this.celdaSize + this.celdaSize;
           this.balasAlien.push(new BalaEnemigo(px, py, 1, 'alien'));
-
         }
       }
     }
   }
 }
-
-
-
