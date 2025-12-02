@@ -1,29 +1,3 @@
-class BalaEnemigo {
-  constructor(x, y, direccion, tipo) {
-    this.x = x;
-    this.y = y;
-    this.direccion = direccion;
-    this.tipo = tipo;
-    this.velocidad = 4;
-    this.width = 20;
-    this.height = 20;
-  }
-
-  mover() {
-    this.y += this.velocidad * this.direccion;
-  }
-
-  dibujar(ctx) {
-    const img = new Image();
-    img.src = 'assets/icon2.png'; // bala con icon2
-    ctx.drawImage(img, this.x, this.y, this.width, this.height);
-  }
-
-  fueraDelCanvas(canvas) {
-    return this.y < -this.height || this.y > canvas.height;
-  }
-}
-
 export default class Enemigo {
   constructor(matriz, filas, columnas, celdaSize, balasAlien) {
     this.matriz = matriz;
@@ -32,43 +6,50 @@ export default class Enemigo {
     this.celdaSize = celdaSize;
     this.balasAlien = balasAlien;
 
+    this.enemigos = []; // lista de enemigos con coordenadas
+
     // colocar algunos aliens
     for (let k = 3; k > 0; k--) {
       const i = Math.floor(Math.random() * columnas);
       const j = Math.floor(Math.random() * (filas - 7));
       this.matriz.colocar(i, j, 'alien');
+
+      this.enemigos.push({
+        x: i * celdaSize,
+        y: j * celdaSize,
+        width: celdaSize,
+        height: celdaSize,
+        dx: Math.random() < 0.5 ? 0.5 : -0.5, // movimiento lento horizontal
+        dy: 0 // opcional: movimiento vertical
+      });
     }
   }
 
   disparar() {
-    for (let j = 0; j < this.filas; j++) {
-      for (let i = 0; i < this.columnas; i++) {
-        if (this.matriz.obtener(i, j) === 'alien' && Math.random() < 0.5) {
-          const px = i * this.celdaSize + this.celdaSize / 2 - 10;
-          const py = j * this.celdaSize + this.celdaSize;
-          this.balasAlien.push(new BalaEnemigo(px, py, 1, 'alien'));
-        }
+    for (let e of this.enemigos) {
+      if (Math.random() < 0.01) { // baja probabilidad de disparo
+        const px = e.x + e.width / 2 - 10;
+        const py = e.y + e.height;
+        this.balasAlien.push(new BalaEnemigo(px, py, 1, 'alien'));
       }
     }
   }
 
-  // 🔄 Movimiento aleatorio lento
   mover() {
-    for (let j = 0; j < this.filas; j++) {
-      for (let i = 0; i < this.columnas; i++) {
-        if (this.matriz.obtener(i, j) === 'alien') {
-          // probabilidad baja de moverse en cada frame
-          if (Math.random() < 0.02) {
-            const nuevaX = i + (Math.random() < 0.5 ? -1 : 1);
-            const nuevaY = j + (Math.random() < 0.1 ? 1 : 0); // a veces baja
+    for (let e of this.enemigos) {
+      e.x += e.dx;
+      e.y += e.dy;
 
-            if (this.matriz.enRango(nuevaX, nuevaY) && !this.matriz.obtener(nuevaX, nuevaY)) {
-              this.matriz.colocar(i, j, null);
-              this.matriz.colocar(nuevaX, nuevaY, 'alien');
-            }
-          }
-        }
+      // rebote en bordes
+      if (e.x <= 0 || e.x + e.width >= this.columnas * this.celdaSize) {
+        e.dx *= -1;
       }
+    }
+  }
+
+  dibujar(ctx, alienImg) {
+    for (let e of this.enemigos) {
+      ctx.drawImage(alienImg, e.x, e.y, e.width, e.height);
     }
   }
 }
