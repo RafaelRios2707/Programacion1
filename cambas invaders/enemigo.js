@@ -76,9 +76,9 @@ export default class Enemigo {
     for (let j = this.filas - 1; j >= 0; j--) {
       for (let i = 0; i < this.columnas; i++) {
         if (snapshot[j][i] === 'alien') {
-          if (Math.random() < 0.03) {
+          if (Math.random() < 0.02) {
             const dx = Math.random() < 0.5 ? -1 : 1;
-            const dy = Math.random() < 0.15 ? 1 : 0;
+            const dy = Math.random() < 0.07 ? 1 : 0;
             const nuevaX = i + dx;
             const nuevaY = j + dy;
 
@@ -101,3 +101,4 @@ export default class Enemigo {
     }
   }
 }
+
