@@ -17,8 +17,16 @@ let fondoCargado = false;
 alienImg.src = 'assets/alien.png';
 fondoImg.src = 'assets/fondo.png';
 
-alienImg.onload = () => { alienCargado = true; verificarCarga(); };
-fondoImg.onload = () => { fondoCargado = true; verificarCarga(); };
+alienImg.onload = () => { 
+  alienCargado = true; 
+  console.log("Alien cargado"); 
+  verificarCarga(); 
+};
+fondoImg.onload = () => { 
+  fondoCargado = true; 
+  console.log("Fondo cargado"); 
+  verificarCarga(); 
+};
 
 let matriz;
 let balasNave = [];
@@ -27,7 +35,9 @@ let player;
 let enemigo;
 
 function verificarCarga() {
+  console.log("Verificando carga...");
   if (alienCargado && fondoCargado) {
+    console.log("Todo cargado, iniciando juego");
     iniciarJuego();
   }
 }
@@ -37,11 +47,13 @@ class Matriz {
     this.filas = filas;
     this.columnas = columnas;
     this.grid = Array.from({ length: filas }, () => Array(columnas).fill(null));
+    console.log("Matriz creada con", filas, "filas y", columnas, "columnas");
   }
 
   colocar(i, j, tipo) {
     if (this.enRango(i, j)) {
       this.grid[j][i] = tipo;
+      console.log("Colocado", tipo, "en", i, j);
     }
   }
 
@@ -73,22 +85,33 @@ class Matriz {
 }
 
 function iniciarJuego() {
+  console.log("Iniciando juego...");
   matriz = new Matriz(filas, columnas);
   player = new Player(matriz, columnas, filas, celdaSize, balasNave);
-  enemigo = new Enemigo(matriz, filas, columnas, celdaSize, balasAlien);
+  console.log("Player creado:", player);
 
-  setInterval(() => enemigo.disparar(), 500);
+  enemigo = new Enemigo(matriz, filas, columnas, celdaSize, balasAlien);
+  console.log("Enemigo creado:", enemigo);
+
+  setInterval(() => {
+    console.log("Intentando disparo enemigo...");
+    enemigo.disparar();
+    console.log("BalasAlien actuales:", balasAlien.length);
+  }, 500);
+
   gameLoop();
 }
 
 document.addEventListener('keydown', (e) => {
+  console.log("Tecla presionada:", e.code);
   if (e.code === 'ArrowLeft') {
     player.mover(-1);
+    console.log("Jugador movido a la izquierda");
   } else if (e.code === 'ArrowRight') {
     player.mover(1);
+    console.log("Jugador movido a la derecha");
   }
 });
-
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -101,13 +124,22 @@ function gameLoop() {
     matriz.dibujar(ctx);
   }
 
-  balasNave.forEach(b => { b.mover(); b.dibujar(ctx); });
-  balasAlien.forEach(b => { b.mover(); b.dibujar(ctx); });
+  balasNave.forEach(b => { 
+    b.mover(); 
+    b.dibujar(ctx); 
+  });
+  balasAlien.forEach(b => { 
+    b.mover(); 
+    b.dibujar(ctx); 
+  });
+
+  console.log("Loop: balasNave =", balasNave.length, "balasAlien =", balasAlien.length);
 
   balasNave = balasNave.filter(b => !b.fueraDelCanvas(canvas));
   balasAlien = balasAlien.filter(b => !b.fueraDelCanvas(canvas));
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
