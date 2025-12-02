@@ -82,14 +82,13 @@ function iniciarJuego() {
 }
 
 document.addEventListener('keydown', (e) => {
-  if (e.code === 'Space' || e.code === ' ') {
-    player.disparar();
-  } else if (e.code === 'ArrowLeft') {
+  if (e.code === 'ArrowLeft') {
     player.mover(-1);
   } else if (e.code === 'ArrowRight') {
     player.mover(1);
   }
 });
+
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -110,4 +109,5 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
