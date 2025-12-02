@@ -11,8 +11,12 @@ export default class Player {
     this.matriz.colocar(6, 11, 'nave');
     this.imagenActual = 'assets/nave_derecha.png';
 
-    // disparo automático cada 2 segundos
-    setInterval(() => this.disparar(), 2000);
+    console.log("Player inicializado");
+
+    setInterval(() => {
+      console.log("Jugador intenta disparar");
+      this.disparar();
+    }, 2000);
   }
 
   encontrarNave() {
@@ -31,6 +35,7 @@ export default class Player {
     if (pos) {
       const px = pos.i * this.celdaSize + this.celdaSize / 2 - 3;
       const py = pos.j * this.celdaSize;
+      console.log("Jugador disparó bala en:", px, py);
       this.balasNave.push(new Bala(px, py, -1, 'nave'));
     }
   }
