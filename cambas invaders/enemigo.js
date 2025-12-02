@@ -21,7 +21,7 @@ export default class Enemigo {
   disparar() {
     for (let j = 0; j < this.filas; j++) {
       for (let i = 0; i < this.columnas; i++) {
-        if (this.matriz.obtener(i, j) === 'alien' && Math.random() < 0.06) {
+        if (this.matriz.obtener(i, j) === 'alien' && Math.random() < 0.5) {
           const px = i * this.celdaSize + this.celdaSize / 2 - 3;
           const py = j * this.celdaSize + this.celdaSize;
           this.balasAlien.push(new BalaEnemigo(px, py, 1, 'alien'));
@@ -30,3 +30,4 @@ export default class Enemigo {
     }
   }
 }
+
