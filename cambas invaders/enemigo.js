@@ -1,4 +1,29 @@
-import BalaEnemigo from "./balaenemigo.js";
+class BalaEnemigo {
+  constructor(x, y, direccion, tipo) {
+    this.x = x;
+    this.y = y;
+    this.direccion = direccion;
+    this.tipo = tipo;
+    this.velocidad = 4;
+    this.width = 10;
+    this.height = 20;
+    console.log("BalaEnemigo creada:", this);
+  }
+
+  mover() {
+    this.y += this.velocidad * this.direccion;
+  }
+
+  dibujar(ctx) {
+    ctx.fillStyle = '#f00';
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+    console.log("Dibujando bala alien en:", this.x, this.y);
+  }
+
+  fueraDelCanvas(canvas) {
+    return this.y < -this.height || this.y > canvas.height;
+  }
+}
 
 export default class Enemigo {
   constructor(matriz, filas, columnas, celdaSize, balasAlien) {
@@ -6,7 +31,7 @@ export default class Enemigo {
     this.filas = filas;
     this.columnas = columnas;
     this.celdaSize = celdaSize;
-    this.balasAlien = balasAlien; // NO reemplazar este array
+    this.balasAlien = balasAlien;
 
     for (let k = 3; k > 0; k--) {
       const i = Math.floor(Math.random() * columnas);
@@ -37,4 +62,5 @@ export default class Enemigo {
     console.log("Aliens detectados en matriz:", aliensDetectados);
   }
 }
+
 
