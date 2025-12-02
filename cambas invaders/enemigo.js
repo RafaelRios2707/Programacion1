@@ -6,7 +6,7 @@ export default class Enemigo {
     this.filas = filas;
     this.columnas = columnas;
     this.celdaSize = celdaSize;
-    this.balasAlien = balasAlien;
+    this.balasAlien = balasAlien; // NO reemplazar este array
 
     for (let k = 3; k > 0; k--) {
       const i = Math.floor(Math.random() * columnas);
@@ -24,10 +24,11 @@ export default class Enemigo {
         if (this.matriz.obtener(i, j) === 'alien') {
           aliensDetectados++;
           if (Math.random() < 0.5) {
-            const px = i * this.celdaSize + this.celdaSize / 2 - 3;
+            const px = i * this.celdaSize + this.celdaSize / 2 - 5;
             const py = j * this.celdaSize + this.celdaSize;
             console.log("Alien disparó desde:", i, j);
             this.balasAlien.push(new BalaEnemigo(px, py, 1, 'alien'));
+            console.log("BalasAlien después del push:", this.balasAlien.length);
           }
         }
       }
@@ -36,3 +37,4 @@ export default class Enemigo {
     console.log("Aliens detectados en matriz:", aliensDetectados);
   }
 }
+
