@@ -5,8 +5,8 @@ export default class Bala {
     this.direccion = direccion; // -1 arriba, +1 abajo
     this.tipo = tipo; // 'nave'
     this.velocidad = 6;
-    this.width = 12;
-    this.height = 24;
+    this.width = 20;
+    this.height = 30;
 
     this.imagen = new Image();
     this.imagen.src = 'assets/icon2.png'; // tu sprite de bala
@@ -24,3 +24,4 @@ export default class Bala {
     return this.y < 0 || this.y > canvas.height;
   }
 }
+
