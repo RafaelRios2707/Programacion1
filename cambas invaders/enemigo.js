@@ -8,26 +8,31 @@ export default class Enemigo {
     this.celdaSize = celdaSize;
     this.balasAlien = balasAlien;
 
-    // coloca 3 aliens en posiciones aleatorias
     for (let k = 3; k > 0; k--) {
-      this.matriz.colocar(
-        Math.floor(Math.random() * columnas),
-        Math.floor(Math.random() * (filas - 7)),
-        'alien'
-      );
+      const i = Math.floor(Math.random() * columnas);
+      const j = Math.floor(Math.random() * (filas - 7));
+      this.matriz.colocar(i, j, 'alien');
+      console.log("Alien colocado en:", i, j);
     }
   }
 
   disparar() {
+    let aliensDetectados = 0;
+
     for (let j = 0; j < this.filas; j++) {
       for (let i = 0; i < this.columnas; i++) {
-        if (this.matriz.obtener(i, j) === 'alien' && Math.random() < 0.5) {
-          const px = i * this.celdaSize + this.celdaSize / 2 - 3;
-          const py = j * this.celdaSize + this.celdaSize;
-          this.balasAlien.push(new BalaEnemigo(px, py, 1, 'alien'));
+        if (this.matriz.obtener(i, j) === 'alien') {
+          aliensDetectados++;
+          if (Math.random() < 0.5) {
+            const px = i * this.celdaSize + this.celdaSize / 2 - 3;
+            const py = j * this.celdaSize + this.celdaSize;
+            console.log("Alien disparó desde:", i, j);
+            this.balasAlien.push(new BalaEnemigo(px, py, 1, 'alien'));
+          }
         }
       }
     }
+
+    console.log("Aliens detectados en matriz:", aliensDetectados);
   }
 }
-
