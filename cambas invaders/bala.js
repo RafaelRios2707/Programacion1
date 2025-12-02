@@ -1,12 +1,15 @@
-class Bala {
+export default class Bala {
   constructor(x, y, direccion, tipo) {
     this.x = x;
     this.y = y;
     this.direccion = direccion; // -1 arriba, +1 abajo
     this.tipo = tipo; // 'nave'
     this.velocidad = 6;
-    this.width = 6;
-    this.height = 12;
+    this.width = 12;  // ajusta según el tamaño visual deseado
+    this.height = 24;
+
+    this.imagen = new Image();
+    this.imagen.src = 'assets/icon2.png';
   }
 
   mover() {
@@ -14,12 +17,10 @@ class Bala {
   }
 
   dibujar(ctx) {
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.imagen, this.x, this.y, this.width, this.height);
   }
 
   fueraDelCanvas(canvas) {
     return this.y < 0 || this.y > canvas.height;
   }
 }
-export default Bala;
