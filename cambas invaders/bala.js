@@ -20,6 +20,8 @@ export default class Bala {
   }
 
   fueraDelCanvas(canvas) {
-    return this.y < 0 || this.y > canvas.height;
-  }
+    return this.y < -this.height || this.y > canvas.height;
 }
+
+}
+
