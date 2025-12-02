@@ -1,4 +1,29 @@
-import Bala from "./bala.js";
+class Bala {
+  constructor(x, y, direccion, tipo) {
+    this.x = x;
+    this.y = y;
+    this.direccion = direccion;
+    this.tipo = tipo;
+    this.velocidad = 5;
+    this.width = 10;
+    this.height = 20;
+    console.log("Bala creada:", this);
+  }
+
+  mover() {
+    this.y += this.velocidad * this.direccion;
+  }
+
+  dibujar(ctx) {
+    ctx.fillStyle = this.tipo === 'nave' ? '#0f0' : '#f00';
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+    console.log("Dibujando bala en:", this.x, this.y);
+  }
+
+  fueraDelCanvas(canvas) {
+    return this.y < -this.height || this.y > canvas.height;
+  }
+}
 
 export default class Player {
   constructor(matriz, columnas, filas, celdaSize, balasNave) {
@@ -6,7 +31,7 @@ export default class Player {
     this.columnas = columnas;
     this.filas = filas;
     this.celdaSize = celdaSize;
-    this.balasNave = balasNave; // NO reemplazar este array
+    this.balasNave = balasNave;
 
     this.matriz.colocar(6, 11, 'nave');
     this.imagenActual = 'assets/nave_derecha.png';
@@ -58,3 +83,5 @@ export default class Player {
     }
   }
 }
+
+
