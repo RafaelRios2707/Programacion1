@@ -6,7 +6,7 @@ export default class Player {
     this.columnas = columnas;
     this.filas = filas;
     this.celdaSize = celdaSize;
-    this.balasNave = balasNave;
+    this.balasNave = balasNave; // NO reemplazar este array
 
     this.matriz.colocar(6, 11, 'nave');
     this.imagenActual = 'assets/nave_derecha.png';
@@ -33,10 +33,11 @@ export default class Player {
   disparar() {
     const pos = this.encontrarNave();
     if (pos) {
-      const px = pos.i * this.celdaSize + this.celdaSize / 2 - 3;
+      const px = pos.i * this.celdaSize + this.celdaSize / 2 - 5;
       const py = pos.j * this.celdaSize;
       console.log("Jugador disparó bala en:", px, py);
       this.balasNave.push(new Bala(px, py, -1, 'nave'));
+      console.log("BalasNave después del push:", this.balasNave.length);
     }
   }
 
