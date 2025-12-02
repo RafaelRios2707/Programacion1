@@ -5,11 +5,11 @@ export default class Bala {
     this.direccion = direccion; // -1 arriba, +1 abajo
     this.tipo = tipo; // 'nave'
     this.velocidad = 6;
-    this.width = 12;  // ajusta según el tamaño visual deseado
+    this.width = 12;
     this.height = 24;
 
     this.imagen = new Image();
-    this.imagen.src = 'assets/icon2.png';
+    this.imagen.src = 'assets/icon2.png'; // tu sprite de bala
   }
 
   mover() {
