@@ -107,33 +107,29 @@ function gameLoop() {
   }
 
   if (matriz) {
-    matriz.dibujar(ctx);
+    matriz.dibujar(ctx); // aquí se dibujan los aliens desde la matriz
   }
 
-  // 🔄 mover enemigos dentro de la matriz
-  enemigo.mover();
+  enemigo.mover();    // mueve aliens dentro de la matriz
+  enemigo.disparar(); // permite que disparen
 
-  // 🔫 disparar enemigos
-  enemigo.disparar();
-
-  // balas
   for (let i = 0; i < balasNave.length; i++) {
     balasNave[i].mover();
     balasNave[i].dibujar(ctx);
   }
+
   for (let i = 0; i < balasAlien.length; i++) {
     balasAlien[i].mover();
     balasAlien[i].dibujar(ctx);
   }
 
-  // limpiar balas fuera del canvas
   for (let i = balasNave.length - 1; i >= 0; i--) {
     if (balasNave[i].fueraDelCanvas(canvas)) balasNave.splice(i, 1);
   }
+
   for (let i = balasAlien.length - 1; i >= 0; i--) {
     if (balasAlien[i].fueraDelCanvas(canvas)) balasAlien.splice(i, 1);
   }
 
   requestAnimationFrame(gameLoop);
 }
-
