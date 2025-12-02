@@ -122,22 +122,22 @@ function gameLoop() {
 
   // mover y dibujar balas
   for (let i = 0; i < balasNave.length; i++) {
-    const b = balasNave[i];
-    b.mover();
-    b.dibujar(ctx);
-  }
-  for (let i = 0; i < balasAlien.length; i++) {
-    const b = balasAlien[i];
-    b.mover();
-    b.dibujar(ctx);
+    balasNave[i].mover();
+    balasNave[i].dibujar(ctx);
   }
 
-  // limpiar balas fuera de pantalla SIN romper referencia
+  for (let i = 0; i < balasAlien.length; i++) {
+    balasAlien[i].mover();
+    balasAlien[i].dibujar(ctx);
+  }
+
+  // eliminar balas fuera del canvas SIN romper referencia
   for (let i = balasNave.length - 1; i >= 0; i--) {
     if (balasNave[i].fueraDelCanvas(canvas)) {
       balasNave.splice(i, 1);
     }
   }
+
   for (let i = balasAlien.length - 1; i >= 0; i--) {
     if (balasAlien[i].fueraDelCanvas(canvas)) {
       balasAlien.splice(i, 1);
@@ -148,6 +148,8 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
+
 
 
 
