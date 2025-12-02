@@ -86,10 +86,9 @@ function iniciarJuego() {
   player = new Player(matriz, columnas, filas, celdaSize, balasNave);
   enemigo = new Enemigo(matriz, filas, columnas, celdaSize, balasAlien);
 
-  // disparo controlado cada segundo
   setInterval(() => {
     enemigo.disparar();
-  }, 1000);
+  }, 1000); // disparo controlado
 
   gameLoop();
 }
@@ -139,5 +138,3 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
-
-
