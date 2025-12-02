@@ -5,7 +5,7 @@ class Bala {
     this.direccion = direccion;
     this.tipo = tipo;
     this.velocidad = 5;
-    this.width = 10;
+    this.width = 20;
     this.height = 20;
     console.log("Bala creada:", this);
   }
@@ -85,6 +85,7 @@ export default class Player {
     }
   }
 }
+
 
 
 
