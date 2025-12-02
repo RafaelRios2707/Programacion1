@@ -91,32 +91,20 @@ function iniciarJuego() {
   matriz = new Matriz(filas, columnas);
 
   player = new Player(matriz, columnas, filas, celdaSize, balasNave);
-  console.log("Player creado:", player);
-
   enemigo = new Enemigo(matriz, filas, columnas, celdaSize, balasAlien);
-  console.log("Enemigo creado:", enemigo);
-
-  // Verificar referencias compartidas
-  console.log("¿balasNave === player.balasNave?", balasNave === player.balasNave);
-  console.log("¿balasAlien === enemigo.balasAlien?", balasAlien === enemigo.balasAlien);
 
   setInterval(() => {
-    console.log("Intentando disparo enemigo...");
     enemigo.disparar();
-    console.log("BalasAlien después del disparo:", balasAlien.length);
   }, 500);
 
   gameLoop();
 }
 
 document.addEventListener('keydown', (e) => {
-  console.log("Tecla presionada:", e.code);
   if (e.code === 'ArrowLeft') {
     player.mover(-1);
-    console.log("Jugador movido a la izquierda");
   } else if (e.code === 'ArrowRight') {
     player.mover(1);
-    console.log("Jugador movido a la derecha");
   }
 });
 
@@ -141,13 +129,13 @@ function gameLoop() {
     b.dibujar(ctx);
   });
 
-  console.log("Loop: balasNave =", balasNave.length, "balasAlien =", balasAlien.length);
-
   balasNave = balasNave.filter(b => !b.fueraDelCanvas(canvas));
   balasAlien = balasAlien.filter(b => !b.fueraDelCanvas(canvas));
 
   requestAnimationFrame(gameLoop);
 }
+
+
 
 
 
