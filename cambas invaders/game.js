@@ -96,7 +96,7 @@ function iniciarJuego() {
   setInterval(() => {
     enemigo.disparar();
     console.log("BalasAlien después del disparo:", balasAlien.length);
-  }, 500);
+  }, 1000);
 
   gameLoop();
 }
@@ -148,6 +148,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
