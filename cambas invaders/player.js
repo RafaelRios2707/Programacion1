@@ -16,9 +16,10 @@ class Bala {
 
   dibujar(ctx) {
     const img = new Image();
-    img.src = 'assets/icon2.png';
+    img.src = 'assets/icon2.png'; // ruta a tu icono
     ctx.drawImage(img, this.x, this.y, this.width, this.height);
-}
+  }
+
 
 
   fueraDelCanvas(canvas) {
@@ -84,6 +85,7 @@ export default class Player {
     }
   }
 }
+
 
 
 
