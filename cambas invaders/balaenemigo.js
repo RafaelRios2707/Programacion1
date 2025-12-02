@@ -1,12 +1,15 @@
 export default class BalaEnemigo {
-  constructor(x, y) {
+  constructor(x, y, direccion, tipo) {
     this.x = x;
     this.y = y;
-    this.direccion = 1; // siempre hacia abajo
-    this.tipo = 'alien';
-    this.velocidad = 6;
-    this.width = 6;
-    this.height = 12;
+    this.direccion = direccion; // +1 abajo
+    this.tipo = tipo; // 'alien'
+    this.velocidad = 4;
+    this.width = 12;
+    this.height = 24;
+
+    this.imagen = new Image();
+    this.imagen.src = 'assets/icon2.png'; // puedes usar otro sprite si quieres
   }
 
   mover() {
@@ -14,11 +17,14 @@ export default class BalaEnemigo {
   }
 
   dibujar(ctx) {
-    ctx.fillStyle = '#880808';
+    ctx.fillStyle = '#f00'; // rojo para distinguir
     ctx.fillRect(this.x, this.y, this.width, this.height);
+    // o usa sprite: ctx.drawImage(this.imagen, this.x, this.y, this.width, this.height);
   }
 
   fueraDelCanvas(canvas) {
-    return this.y > canvas.height;
+    return this.y < 0 || this.y > canvas.height;
   }
 }
+
+
