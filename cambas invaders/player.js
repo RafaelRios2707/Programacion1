@@ -15,10 +15,11 @@ class Bala {
   }
 
   dibujar(ctx) {
-    ctx.fillStyle = this.tipo === 'nave' ? '#0f0' : '#f00';
-    ctx.fillRect(this.x, this.y, this.width, this.height);
-    console.log("Dibujando bala en:", this.x, this.y);
-  }
+    const img = new Image();
+    img.src = 'assets/icon2.png';
+    ctx.drawImage(img, this.x, this.y, this.width, this.height);
+}
+
 
   fueraDelCanvas(canvas) {
     return this.y < -this.height || this.y > canvas.height;
@@ -83,5 +84,6 @@ export default class Player {
     }
   }
 }
+
 
 
