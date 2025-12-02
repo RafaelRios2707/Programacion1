@@ -11,6 +11,7 @@ export default class Player {
     this.matriz.colocar(6, 11, 'nave');
     this.imagenActual = 'assets/nave_derecha.png';
 
+    // disparo automático cada 2 segundos
     setInterval(() => this.disparar(), 2000);
   }
 
@@ -31,9 +32,6 @@ export default class Player {
       const px = pos.i * this.celdaSize + this.celdaSize / 2 - 3;
       const py = pos.j * this.celdaSize;
       this.balasNave.push(new Bala(px, py, -1, 'nave'));
-      console.log("Jugador disparó");
-      console.log("BalasNave:", this.balasNave.length);
-
     }
   }
 
@@ -47,18 +45,10 @@ export default class Player {
         this.matriz.colocar(pos.i, j, null);
         this.matriz.colocar(nuevaX, j, 'nave');
 
-        if (direccion === -1) {
-          this.imagenActual = 'assets/nave_izquierda.png';
-        } else {
-          this.imagenActual = 'assets/nave_derecha.png';
-        }
+        this.imagenActual = direccion === -1
+          ? 'assets/nave_izquierda.png'
+          : 'assets/nave_derecha.png';
       }
     }
   }
 }
-
-
-
-  
-
-
