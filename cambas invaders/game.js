@@ -17,7 +17,7 @@ let alienCargado = false;
 let fondoCargado = false;
 
 alienImg.src = 'assets/alien.png';
-fondoImg.src = 'assets/fondo1.5.png';
+fondoImg.src = 'assets/fondo.png';
 
 alienImg.onload = () => {
   alienCargado = true;
@@ -138,6 +138,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
