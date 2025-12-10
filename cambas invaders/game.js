@@ -134,9 +134,10 @@ function moverBalas(tipo, direccion) {
         if (tipo === 'balaAlien' && destino === 'nave') {
           matriz.colocar(i, j, null);
           matriz.colocar(i, nuevaY, null);
-          console.log("¡La nave fue impactada!");
+          player.recibirImpacto(); // ahora baja vida en vez de eliminar nave directamente
           continue;
         }
+
 
         if (destino === null) {
           movimientos.push({ fromX: i, fromY: j, toX: i, toY: nuevaY, tipo });
@@ -177,6 +178,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
