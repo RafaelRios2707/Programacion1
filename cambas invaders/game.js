@@ -32,6 +32,9 @@ let matriz;
 let player;
 let enemigo;
 
+// contador de frames para controlar velocidad de balas
+let frameCount = 0;
+
 function verificarCarga() {
   if (alienCargado && fondoCargado) {
     iniciarJuego();
@@ -90,9 +93,10 @@ function iniciarJuego() {
   player = new Player(matriz, columnas, filas, celdaSize);
   enemigo = new Enemigo(matriz, filas, columnas, celdaSize);
 
+  // disparo cada 5 segundos
   setInterval(() => {
     enemigo.disparar();
-  }, 1000);
+  }, 5000);
 
   gameLoop();
 }
@@ -163,11 +167,17 @@ function gameLoop() {
 
   enemigo.mover();
 
-  moverBalas('balaNave', -1);
-  moverBalas('balaAlien', 1);
+  // mover balas cada 3 frames para que sean más lentas
+  if (frameCount % 3 === 0) {
+    moverBalas('balaNave', -1);
+    moverBalas('balaAlien', 1);
+  }
+
+  frameCount++;
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
