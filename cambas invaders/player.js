@@ -65,6 +65,12 @@ export default class Player {
     this.vida--;
     console.log("La nave recibió un impacto. Vida restante:", this.vida);
 
+    const vidasElement = document.getElementById("vidas");
+    if (vidasElement) {
+      vidasElement.textContent = "Vidas: " + this.vida;
+  }
+
+
     if (this.vida <= 0) {
       console.log("¡Game Over! La nave ha sido destruida.");
       // aquí puedes reiniciar el juego, mostrar pantalla de derrota, etc.
@@ -75,6 +81,7 @@ export default class Player {
     }
   }
 }
+
 
 
 
