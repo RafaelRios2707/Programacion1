@@ -5,11 +5,14 @@ export default class Player {
     this.filas = filas;
     this.celdaSize = celdaSize;
 
+    // vida inicial del jugador
+    this.vida = 3;
+
     // colocar la nave en la parte inferior central
     this.matriz.colocar(6, 11, 'nave');
     this.imagenActual = 'assets/nave_derecha.png';
 
-    console.log("Player inicializado");
+    console.log("Player inicializado con vida:", this.vida);
 
     // disparo automático cada 2 segundos (puedes quitarlo si prefieres manual con Space)
     setInterval(() => {
@@ -56,10 +59,22 @@ export default class Player {
       }
     }
   }
+
+  // nuevo método para recibir daño
+  recibirImpacto() {
+    this.vida--;
+    console.log("La nave recibió un impacto. Vida restante:", this.vida);
+
+    if (this.vida <= 0) {
+      console.log("¡Game Over! La nave ha sido destruida.");
+      // aquí puedes reiniciar el juego, mostrar pantalla de derrota, etc.
+      const pos = this.encontrarNave();
+      if (pos) {
+        this.matriz.colocar(pos.i, pos.j, null);
+      }
+    }
+  }
 }
-
-
-
 
 
 
