@@ -1,45 +1,17 @@
-class Bala {
-  constructor(x, y, direccion, tipo) {
-    this.x = x;
-    this.y = y;
-    this.direccion = direccion;
-    this.tipo = tipo;
-    this.velocidad = 5;
-    this.width = 20;
-    this.height = 25;
-    console.log("Bala creada:", this);
-  }
-
-  mover() {
-    this.y += this.velocidad * this.direccion;
-  }
-
-  dibujar(ctx) {
-    const img = new Image();
-    img.src = 'assets/icon2.png'; // ruta a tu icono
-    ctx.drawImage(img, this.x, this.y, this.width, this.height);
-  }
-
-
-
-  fueraDelCanvas(canvas) {
-    return this.y < -this.height || this.y > canvas.height;
-  }
-}
-
 export default class Player {
-  constructor(matriz, columnas, filas, celdaSize, balasNave) {
+  constructor(matriz, columnas, filas, celdaSize) {
     this.matriz = matriz;
     this.columnas = columnas;
     this.filas = filas;
     this.celdaSize = celdaSize;
-    this.balasNave = balasNave;
 
+    // colocar la nave en la parte inferior central
     this.matriz.colocar(6, 11, 'nave');
     this.imagenActual = 'assets/nave_derecha.png';
 
     console.log("Player inicializado");
 
+    // disparo automático cada 2 segundos (puedes quitarlo si prefieres manual con Space)
     setInterval(() => {
       console.log("Jugador intenta disparar");
       this.disparar();
@@ -60,11 +32,11 @@ export default class Player {
   disparar() {
     const pos = this.encontrarNave();
     if (pos) {
-      const px = pos.i * this.celdaSize + this.celdaSize / 2 - 5;
-      const py = pos.j * this.celdaSize;
-      console.log("Jugador disparó bala en:", px, py);
-      this.balasNave.push(new Bala(px, py, -1, 'nave'));
-      console.log("BalasNave después del push:", this.balasNave.length);
+      const nuevaY = pos.j - 1;
+      if (this.matriz.enRango(pos.i, nuevaY) && this.matriz.obtener(pos.i, nuevaY) === null) {
+        this.matriz.colocar(pos.i, nuevaY, 'balaNave');
+        console.log("Jugador disparó bala matricial en:", pos.i, nuevaY);
+      }
     }
   }
 
@@ -85,6 +57,8 @@ export default class Player {
     }
   }
 }
+
+
 
 
 
