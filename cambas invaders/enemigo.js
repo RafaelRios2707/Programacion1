@@ -1,36 +1,9 @@
-class BalaEnemigo {
-  constructor(x, y, direccion, tipo) {
-    this.x = x;
-    this.y = y;
-    this.direccion = direccion;
-    this.tipo = tipo;
-    this.velocidad = 4;
-    this.width = 20;
-    this.height = 20;
-  }
-
-  mover() {
-    this.y += this.velocidad * this.direccion;
-  }
-
-  dibujar(ctx) {
-    const img = new Image();
-    img.src = 'assets/icon2.png';
-    ctx.drawImage(img, this.x, this.y, this.width, this.height);
-  }
-
-  fueraDelCanvas(canvas) {
-    return this.y < -this.height || this.y > canvas.height;
-  }
-}
-
 export default class Enemigo {
-  constructor(matriz, filas, columnas, celdaSize, balasAlien) {
+  constructor(matriz, filas, columnas, celdaSize) {
     this.matriz = matriz;
     this.filas = filas;
     this.columnas = columnas;
     this.celdaSize = celdaSize;
-    this.balasAlien = balasAlien;
 
     this.lastShot = 0;
     this.shotCooldown = 1000; // milisegundos
@@ -53,9 +26,10 @@ export default class Enemigo {
     for (let j = 0; j < this.filas; j++) {
       for (let i = 0; i < this.columnas; i++) {
         if (this.matriz.obtener(i, j) === 'alien' && Math.random() < 0.25) {
-          const px = i * this.celdaSize + this.celdaSize / 2 - 10;
-          const py = j * this.celdaSize + this.celdaSize;
-          this.balasAlien.push(new BalaEnemigo(px, py, 1, 'alien'));
+          const nuevaY = j + 1;
+          if (this.matriz.enRango(i, nuevaY) && this.matriz.obtener(i, nuevaY) === null) {
+            this.matriz.colocar(i, nuevaY, 'balaAlien');
+          }
         }
       }
     }
@@ -101,6 +75,3 @@ export default class Enemigo {
     }
   }
 }
-
-
-
