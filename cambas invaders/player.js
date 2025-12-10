@@ -6,7 +6,7 @@ export default class Player {
     this.celdaSize = celdaSize;
 
     // vida inicial del jugador
-    this.vida = 3;
+    this.vida = 6;
 
     // colocar la nave en la parte inferior central
     this.matriz.colocar(6, 11, 'nave');
@@ -75,6 +75,7 @@ export default class Player {
     }
   }
 }
+
 
 
 
