@@ -168,7 +168,7 @@ function gameLoop() {
   enemigo.mover();
 
   // mover balas cada 3 frames para que sean más lentas
-  if (frameCount % 3 === 0) {
+  if (frameCount % 5 === 0) {
     moverBalas('balaNave', -1);
     moverBalas('balaAlien', 1);
   }
@@ -177,6 +177,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
