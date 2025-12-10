@@ -96,7 +96,7 @@ function iniciarJuego() {
   // disparo cada 5 segundos
   setInterval(() => {
     enemigo.disparar();
-  }, 5000);
+  }, 1000);
 
   gameLoop();
 }
@@ -177,6 +177,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
