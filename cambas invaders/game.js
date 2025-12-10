@@ -29,8 +29,6 @@ fondoImg.onload = () => {
 };
 
 let matriz;
-let balasNave = [];
-let balasAlien = [];
 let player;
 let enemigo;
 
@@ -74,6 +72,12 @@ class Matriz {
           ctx.drawImage(naveImg, px, py, celdaSize, celdaSize);
         } else if (tipo === 'alien' && alienCargado) {
           ctx.drawImage(alienImg, px, py, celdaSize, celdaSize);
+        } else if (tipo === 'balaNave') {
+          ctx.fillStyle = "white";
+          ctx.fillRect(px + celdaSize/2 - 5, py + 10, 10, 20);
+        } else if (tipo === 'balaAlien') {
+          ctx.fillStyle = "red";
+          ctx.fillRect(px + celdaSize/2 - 5, py + 10, 10, 20);
         }
       }
     }
@@ -83,12 +87,12 @@ class Matriz {
 function iniciarJuego() {
   matriz = new Matriz(filas, columnas);
 
-  player = new Player(matriz, columnas, filas, celdaSize, balasNave);
-  enemigo = new Enemigo(matriz, filas, columnas, celdaSize, balasAlien);
+  player = new Player(matriz, columnas, filas, celdaSize);
+  enemigo = new Enemigo(matriz, filas, columnas, celdaSize);
 
   setInterval(() => {
     enemigo.disparar();
-  }, 1000); // disparo controlado
+  }, 1000);
 
   gameLoop();
 }
@@ -98,8 +102,53 @@ document.addEventListener('keydown', (e) => {
     player.mover(-1);
   } else if (e.code === 'ArrowRight') {
     player.mover(1);
+  } else if (e.code === 'Space') {
+    player.disparar();
   }
 });
+
+function moverBalas(tipo, direccion) {
+  const movimientos = [];
+
+  for (let j = 0; j < filas; j++) {
+    for (let i = 0; i < columnas; i++) {
+      if (matriz.obtener(i, j) === tipo) {
+        const nuevaY = j + direccion;
+
+        if (!matriz.enRango(i, nuevaY)) {
+          matriz.colocar(i, j, null);
+          continue;
+        }
+
+        const destino = matriz.obtener(i, nuevaY);
+
+        if (tipo === 'balaNave' && destino === 'alien') {
+          matriz.colocar(i, j, null);
+          matriz.colocar(i, nuevaY, null);
+          continue;
+        }
+        if (tipo === 'balaAlien' && destino === 'nave') {
+          matriz.colocar(i, j, null);
+          matriz.colocar(i, nuevaY, null);
+          console.log("¡La nave fue impactada!");
+          continue;
+        }
+
+        if (destino === null) {
+          movimientos.push({ fromX: i, fromY: j, toX: i, toY: nuevaY, tipo });
+        } else if (destino === 'balaNave' || destino === 'balaAlien') {
+          matriz.colocar(i, j, null);
+          matriz.colocar(i, nuevaY, null);
+        }
+      }
+    }
+  }
+
+  for (const m of movimientos) {
+    matriz.colocar(m.fromX, m.fromY, null);
+    matriz.colocar(m.toX, m.toY, m.tipo);
+  }
+}
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -112,29 +161,10 @@ function gameLoop() {
     matriz.dibujar(ctx);
   }
 
-  enemigo.mover(); // movimiento lento dentro de la matriz
+  enemigo.mover();
 
-  for (let i = 0; i < balasNave.length; i++) {
-    balasNave[i].mover();
-    balasNave[i].dibujar(ctx);
-  }
-
-  for (let i = 0; i < balasAlien.length; i++) {
-    balasAlien[i].mover();
-    balasAlien[i].dibujar(ctx);
-  }
-
-  for (let i = balasNave.length - 1; i >= 0; i--) {
-    if (balasNave[i].fueraDelCanvas(canvas)) {
-      balasNave.splice(i, 1);
-    }
-  }
-
-  for (let i = balasAlien.length - 1; i >= 0; i--) {
-    if (balasAlien[i].fueraDelCanvas(canvas)) {
-      balasAlien.splice(i, 1);
-    }
-  }
+  moverBalas('balaNave', -1);
+  moverBalas('balaAlien', 1);
 
   requestAnimationFrame(gameLoop);
 }
