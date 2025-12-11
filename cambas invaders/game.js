@@ -25,6 +25,12 @@ let balaJugadorCargada = false;
 balaJugadorImg.src = "assets/icon2.png";
 balaJugadorImg.onload = () => { balaJugadorCargada = true; };
 
+const balaEnemigaImg = new Image();
+let balaEnemigaCargada = false;
+balaEnemigaImg.src = "assets/coca.png";
+balaEnemigaImg.onload = () => { balaEnemigaCargada = true; };
+
+
 let alienCargado = false;
 let fondoCargado = false;
 
@@ -82,10 +88,10 @@ class Matriz {
         } else if (tipo === 'balaNave' && balaJugadorCargada) {
           // dibujar bala del jugador con icono2.png
           ctx.drawImage(balaJugadorImg, px + celdaSize / 2 - 10, py + 5, 20, 20);
-        } else if (tipo === 'balaAlien') {
-          // bala enemiga (puedes cambiar a otro sprite si quieres)
-          ctx.fillStyle = "red";
-          ctx.fillRect(px + celdaSize / 2 - 5, py + 10, 10, 20);
+        } else if (tipo === 'balaAlien' && balaEnemigaCargada) {
+          ctx.drawImage(balaEnemigaImg, px + celdaSize / 2 - 10, py + 5, 20, 20);
+}}
+
         }
       }
     }
@@ -101,7 +107,7 @@ function iniciarJuego() {
   // disparo cada 5 segundos
   setInterval(() => {
     enemigo.disparar();
-  }, 5000);
+  }, 2500);
 
   gameLoop();
 }
@@ -204,6 +210,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
