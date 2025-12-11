@@ -77,8 +77,9 @@ recibirImpacto() {
       this.matriz.colocar(pos.i, pos.j, null);
     }
     window.location.href = "gameover.html";
-  }
+  }}
 }
+
 
 
 
