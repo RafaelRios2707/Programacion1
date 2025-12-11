@@ -19,6 +19,12 @@ const config = niveles[nivelActual];
 const alienImg = new Image();
 const fondoImg = new Image();
 
+// 🔫 imagen de bala del jugador
+const balaJugadorImg = new Image();
+let balaJugadorCargada = false;
+balaJugadorImg.src = "assets/icono2.png";
+balaJugadorImg.onload = () => { balaJugadorCargada = true; };
+
 let alienCargado = false;
 let fondoCargado = false;
 
@@ -73,10 +79,11 @@ class Matriz {
           ctx.drawImage(player.imagenActual, px, py, celdaSize, celdaSize);
         } else if (tipo === 'alien' && alienCargado) {
           ctx.drawImage(alienImg, px, py, celdaSize, celdaSize);
-        } else if (tipo === 'balaNave') {
-          ctx.fillStyle = "white";
-          ctx.fillRect(px + celdaSize / 2 - 5, py + 10, 10, 20);
+        } else if (tipo === 'balaNave' && balaJugadorCargada) {
+          // dibujar bala del jugador con icono2.png
+          ctx.drawImage(balaJugadorImg, px + celdaSize / 2 - 10, py + 5, 20, 20);
         } else if (tipo === 'balaAlien') {
+          // bala enemiga (puedes cambiar a otro sprite si quieres)
           ctx.fillStyle = "red";
           ctx.fillRect(px + celdaSize / 2 - 5, py + 10, 10, 20);
         }
@@ -94,7 +101,7 @@ function iniciarJuego() {
   // disparo cada 5 segundos
   setInterval(() => {
     enemigo.disparar();
-  }, 2500);
+  }, 5000);
 
   gameLoop();
 }
@@ -190,12 +197,14 @@ function gameLoop() {
     if (niveles[siguienteNivel]) {
       window.location.href = `game.html?nivel=${siguienteNivel}`;
     } else {
-      window.location.href = "gamewin.html";
+      window.location.href = "gamewin.html"; // victoria final
     }
     return;
   }
 
   requestAnimationFrame(gameLoop);
 }
+
+
 
 
