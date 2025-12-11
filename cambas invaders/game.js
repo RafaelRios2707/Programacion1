@@ -2,6 +2,7 @@ console.log("game.js cargado correctamente");
 
 import Player from "./player.js";
 import Enemigo from "./enemigo.js";
+import { niveles } from "./niveles.js";
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
@@ -10,23 +11,22 @@ const filas = 12;
 const columnas = 12;
 const celdaSize = 50;
 
+// detectar nivel actual desde la URL
+const urlParams = new URLSearchParams(window.location.search);
+let nivelActual = parseInt(urlParams.get("nivel")) || 1;
+const config = niveles[nivelActual];
+
 const alienImg = new Image();
 const fondoImg = new Image();
 
 let alienCargado = false;
 let fondoCargado = false;
 
-alienImg.src = 'assets/alien.png';
-fondoImg.src = 'assets/fondo.png';
+alienImg.src = config.alien;
+fondoImg.src = config.fondo;
 
-alienImg.onload = () => {
-  alienCargado = true;
-  verificarCarga();
-};
-fondoImg.onload = () => {
-  fondoCargado = true;
-  verificarCarga();
-};
+alienImg.onload = () => { alienCargado = true; verificarCarga(); };
+fondoImg.onload = () => { fondoCargado = true; verificarCarga(); };
 
 let matriz;
 let player;
@@ -71,7 +71,7 @@ class Matriz {
 
         if (tipo === 'nave') {
           const naveImg = new Image();
-          naveImg.src = player.imagenActual;
+          naveImg.src = config.nave;
           ctx.drawImage(naveImg, px, py, celdaSize, celdaSize);
         } else if (tipo === 'alien' && alienCargado) {
           ctx.drawImage(alienImg, px, py, celdaSize, celdaSize);
@@ -91,12 +91,12 @@ function iniciarJuego() {
   matriz = new Matriz(filas, columnas);
 
   player = new Player(matriz, columnas, filas, celdaSize);
-  enemigo = new Enemigo(matriz, filas, columnas, celdaSize);
+  enemigo = new Enemigo(matriz, filas, columnas, celdaSize, config.cantidadAliens);
 
   // disparo cada 5 segundos
   setInterval(() => {
     enemigo.disparar();
-  }, 1000);
+  }, 5000);
 
   gameLoop();
 }
@@ -132,14 +132,10 @@ function moverBalas(tipo, direccion) {
           continue;
         }
         if (tipo === 'balaAlien' && destino === 'nave') {
-          // eliminar la bala que impactó
           matriz.colocar(i, j, null);
-          // NO eliminar la nave, solo bajar vida
           player.recibirImpacto();
           continue;
-}
-
-
+        }
 
         if (destino === null) {
           movimientos.push({ fromX: i, fromY: j, toX: i, toY: nuevaY, tipo });
@@ -170,15 +166,15 @@ function gameLoop() {
 
   enemigo.mover();
 
-  // mover balas cada 5 frames para que sean más lentas
-  if (frameCount % 5 === 0) {
+  // mover balas cada X frames según velocidad del nivel
+  if (frameCount % config.velocidadBalas === 0) {
     moverBalas('balaNave', -1);
     moverBalas('balaAlien', 1);
   }
 
   frameCount++;
 
-  // 🔎 comprobar si quedan aliens
+  // comprobar si quedan aliens
   let quedanAliens = false;
   for (let j = 0; j < filas; j++) {
     for (let i = 0; i < columnas; i++) {
@@ -190,22 +186,16 @@ function gameLoop() {
     if (quedanAliens) break;
   }
 
-  // si no quedan aliens, pasar a game2.html
+  // si no quedan aliens, pasar al siguiente nivel
   if (!quedanAliens) {
-    window.location.href = "game2.html";
-    return; // detener el loop
+    const siguienteNivel = nivelActual + 1;
+    if (niveles[siguienteNivel]) {
+      window.location.href = `game.html?nivel=${siguienteNivel}`;
+    } else {
+      window.location.href = "gameover.html";
+    }
+    return;
   }
 
   requestAnimationFrame(gameLoop);
 }
-
-
-
-
-
-
-
-
-
-
-
