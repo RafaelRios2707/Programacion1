@@ -90,7 +90,7 @@ class Matriz {
           ctx.drawImage(balaJugadorImg, px + celdaSize / 2 - 10, py + 5, 20, 20);
         } else if (tipo === 'balaAlien' && balaEnemigaCargada) {
           ctx.drawImage(balaEnemigaImg, px + celdaSize / 2 - 10, py + 5, 20, 20);
-}}
+}
 
         }
       }
@@ -210,6 +210,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
