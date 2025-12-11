@@ -10,7 +10,10 @@ export default class Player {
 
     // colocar la nave en la parte inferior central
     this.matriz.colocar(6, 11, 'nave');
-    this.imagenActual = 'assets/nave_derecha.png';
+
+    // imagen inicial (objeto Image, no string)
+    this.imagenActual = new Image();
+    this.imagenActual.src = 'assets/nave_derecha.png';
 
     console.log("Player inicializado con vida:", this.vida);
 
@@ -53,42 +56,30 @@ export default class Player {
         this.matriz.colocar(pos.i, j, null);
         this.matriz.colocar(nuevaX, j, 'nave');
 
-        this.imagenActual = direccion === -1
+        // cambiar sprite según dirección
+        this.imagenActual.src = direccion === -1
           ? 'assets/nave_izquierda.png'
           : 'assets/nave_derecha.png';
       }
     }
   }
 
-  // nuevo método para recibir daño
-recibirImpacto() {
-  this.vida--;
-  console.log("La nave recibió un impacto. Vida restante:", this.vida);
+  recibirImpacto() {
+    this.vida--;
+    console.log("La nave recibió un impacto. Vida restante:", this.vida);
 
-  const vidasElement = document.getElementById("vidas");
-  if (vidasElement) {
-    vidasElement.textContent = "Vidas: " + this.vida;
-  }
-
-  if (this.vida <= 0) {
-    console.log("¡Game Over! La nave ha sido destruida.");
-    const pos = this.encontrarNave();
-    if (pos) {
-      this.matriz.colocar(pos.i, pos.j, null);
+    const vidasElement = document.getElementById("vidas");
+    if (vidasElement) {
+      vidasElement.textContent = "Vidas: " + this.vida;
     }
-    window.location.href = "gameover.html";
-  }}
+
+    if (this.vida <= 0) {
+      console.log("¡Game Over! La nave ha sido destruida.");
+      const pos = this.encontrarNave();
+      if (pos) {
+        this.matriz.colocar(pos.i, pos.j, null);
+      }
+      window.location.href = "gameover.html";
+    }
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
