@@ -49,27 +49,32 @@
     <button onclick="location.href='index.html'">MENÚ PRINCIPAL</button>
   </div>
 
-<audio id="gameover-audio">
-  <source src="assets/gameover.mp3" type="audio/mpeg">
-  Tu navegador no soporta audio HTML5.
-</audio>
-
-<script>
-  window.addEventListener("load", () => {
-    const audio = document.getElementById("gameover-audio");
-    audio.play().catch(err => {
-      console.log("El navegador bloqueó el autoplay, se necesita interacción.");
-    });
-  });
-</script>
 
 
 
   <div class="footer">
     © 2023 CAMBAS INVADERS — PENROSKY GAMES
   </div>
+  
+  <audio id="gameover-audio">
+    <source src="assets/gameover.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+  
+  <script>
+    // reproducir audio tras el primer clic
+    window.addEventListener("click", () => {
+      const audio = document.getElementById("gameover-audio");
+      if (audio.paused) {
+        audio.play().catch(err => {
+          console.log("Error al reproducir el audio:", err);
+        });
+      }
+    });
+  </script>
 </body>
 </html>
+
 
 
 
