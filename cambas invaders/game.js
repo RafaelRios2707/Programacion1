@@ -75,10 +75,10 @@ class Matriz {
           ctx.drawImage(alienImg, px, py, celdaSize, celdaSize);
         } else if (tipo === 'balaNave') {
           ctx.fillStyle = "white";
-          ctx.fillRect(px + celdaSize/2 - 5, py + 10, 10, 20);
+          ctx.fillRect(px + celdaSize / 2 - 5, py + 10, 10, 20);
         } else if (tipo === 'balaAlien') {
           ctx.fillStyle = "red";
-          ctx.fillRect(px + celdaSize/2 - 5, py + 10, 10, 20);
+          ctx.fillRect(px + celdaSize / 2 - 5, py + 10, 10, 20);
         }
       }
     }
@@ -178,11 +178,22 @@ function gameLoop() {
     for (let i = 0; i < columnas; i++) {
       if (matriz.obtener(i, j) === 'alien') {
         quedanAliens = true;
-        break
+        break;
+      }
+    }
+    if (quedanAliens) break;
+  }
 
+  // si no quedan aliens, pasar al siguiente nivel o terminar
+  if (!quedanAliens) {
+    const siguienteNivel = nivelActual + 1;
+    if (niveles[siguienteNivel]) {
+      window.location.href = `game.html?nivel=${siguienteNivel}`;
+    } else {
+      window.location.href = "gameover.html";
+    }
+    return;
+  }
 
   requestAnimationFrame(gameLoop);
-}}
-
-
-
+}
