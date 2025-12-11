@@ -25,7 +25,7 @@ export default class Enemigo {
 
     for (let j = 0; j < this.filas; j++) {
       for (let i = 0; i < this.columnas; i++) {
-        if (this.matriz.obtener(i, j) === 'alien' && Math.random() < 0.25) {
+        if (this.matriz.obtener(i, j) === 'alien' && Math.random() < 0.5) {
           const nuevaY = j + 1;
           if (this.matriz.enRango(i, nuevaY) && this.matriz.obtener(i, nuevaY) === null) {
             this.matriz.colocar(i, nuevaY, 'balaAlien');
@@ -75,4 +75,5 @@ export default class Enemigo {
     }
   }
 }
+
 
