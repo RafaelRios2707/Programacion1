@@ -22,7 +22,7 @@ const fondoImg = new Image();
 // 🔫 imagen de bala del jugador
 const balaJugadorImg = new Image();
 let balaJugadorCargada = false;
-balaJugadorImg.src = "assets/icono2.png";
+balaJugadorImg.src = "assets/icon2.png";
 balaJugadorImg.onload = () => { balaJugadorCargada = true; };
 
 let alienCargado = false;
@@ -204,6 +204,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
