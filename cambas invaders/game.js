@@ -19,7 +19,7 @@ const config = niveles[nivelActual];
 const alienImg = new Image();
 const fondoImg = new Image();
 
-// 🔫 imagen de bala del jugador
+// imagen de bala del jugador
 const balaJugadorImg = new Image();
 let balaJugadorCargada = false;
 balaJugadorImg.src = "assets/icon2.png";
@@ -30,6 +30,9 @@ let balaEnemigaCargada = false;
 balaEnemigaImg.src = "assets/coca.png";
 balaEnemigaImg.onload = () => { balaEnemigaCargada = true; };
 
+// audios
+const somoAudio = new Audio("assets/somo.mp3");
+const vasoAudio = new Audio("assets/vaso.mp3");
 
 let alienCargado = false;
 let fondoCargado = false;
@@ -86,17 +89,14 @@ class Matriz {
         } else if (tipo === 'alien' && alienCargado) {
           ctx.drawImage(alienImg, px, py, celdaSize, celdaSize);
         } else if (tipo === 'balaNave' && balaJugadorCargada) {
-          // dibujar bala del jugador con icono2.png
           ctx.drawImage(balaJugadorImg, px + celdaSize / 2 - 10, py + 5, 20, 20);
         } else if (tipo === 'balaAlien' && balaEnemigaCargada) {
           ctx.drawImage(balaEnemigaImg, px + celdaSize / 2 - 10, py + 5, 20, 20);
-}
-
         }
       }
     }
   }
-
+}
 
 function iniciarJuego() {
   matriz = new Matriz(filas, columnas);
@@ -104,7 +104,7 @@ function iniciarJuego() {
   player = new Player(matriz, columnas, filas, celdaSize);
   enemigo = new Enemigo(matriz, filas, columnas, celdaSize, config.cantidadAliens);
 
-  // disparo cada 5 segundos
+  // disparo cada 2.5 segundos
   setInterval(() => {
     enemigo.disparar();
   }, 2500);
@@ -117,6 +117,9 @@ document.addEventListener('keydown', (e) => {
     player.mover(-1);
   } else if (e.code === 'ArrowRight') {
     player.mover(1);
+    // reproducir somo.mp3 al mover a la derecha
+    somoAudio.currentTime = 0;
+    somoAudio.play().catch(err => console.log("Autoplay bloqueado:", err));
   } else if (e.code === 'Space') {
     player.disparar();
   }
@@ -145,6 +148,9 @@ function moverBalas(tipo, direccion) {
         if (tipo === 'balaAlien' && destino === 'nave') {
           matriz.colocar(i, j, null);
           player.recibirImpacto();
+          // reproducir vaso.mp3 al recibir daño
+          vasoAudio.currentTime = 0;
+          vasoAudio.play().catch(err => console.log("Autoplay bloqueado:", err));
           continue;
         }
 
@@ -177,7 +183,6 @@ function gameLoop() {
 
   enemigo.mover();
 
-  // mover balas cada X frames según velocidad del nivel
   if (frameCount % config.velocidadBalas === 0) {
     moverBalas('balaNave', -1);
     moverBalas('balaAlien', 1);
@@ -185,7 +190,6 @@ function gameLoop() {
 
   frameCount++;
 
-  // comprobar si quedan aliens
   let quedanAliens = false;
   for (let j = 0; j < filas; j++) {
     for (let i = 0; i < columnas; i++) {
@@ -197,13 +201,12 @@ function gameLoop() {
     if (quedanAliens) break;
   }
 
-  // si no quedan aliens, pasar al siguiente nivel o terminar
   if (!quedanAliens) {
     const siguienteNivel = nivelActual + 1;
     if (niveles[siguienteNivel]) {
       window.location.href = `game.html?nivel=${siguienteNivel}`;
     } else {
-      window.location.href = "gamewin.html"; // victoria final
+      window.location.href = "gamewin.html";
     }
     return;
   }
