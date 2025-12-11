@@ -190,10 +190,11 @@ function gameLoop() {
     if (niveles[siguienteNivel]) {
       window.location.href = `game.html?nivel=${siguienteNivel}`;
     } else {
-      window.location.href = "gameover.html";
+      window.location.href = "gamewin.html";
     }
     return;
   }
 
   requestAnimationFrame(gameLoop);
 }
+
