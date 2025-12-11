@@ -1,17 +1,24 @@
-import Bala from "./bala.js";
-console.log("bala importado",Bala);  
-
 export default class Player {
-  constructor(matriz, columnas, filas, celdaSize, balasNave) {
+  constructor(matriz, columnas, filas, celdaSize) {
     this.matriz = matriz;
     this.columnas = columnas;
     this.filas = filas;
     this.celdaSize = celdaSize;
-    this.balasNave = balasNave;
 
+    // vida inicial del jugador
+    this.vida = 6;
+
+    // colocar la nave en la parte inferior central
     this.matriz.colocar(6, 11, 'nave');
-
     this.imagenActual = 'assets/nave_derecha.png';
+
+    console.log("Player inicializado con vida:", this.vida);
+
+    // disparo automático cada 2 segundos (puedes quitarlo si prefieres manual con Space)
+    setInterval(() => {
+      console.log("Jugador intenta disparar");
+      this.disparar();
+    }, 2000);
   }
 
   encontrarNave() {
@@ -28,14 +35,16 @@ export default class Player {
   disparar() {
     const pos = this.encontrarNave();
     if (pos) {
-      const px = pos.i * this.celdaSize + this.celdaSize / 2 - 3;
-      const py = pos.j * this.celdaSize;
-      this.balasNave.push(new Bala(px, py, -1, 'nave'));
+      const nuevaY = pos.j - 1;
+      if (this.matriz.enRango(pos.i, nuevaY) && this.matriz.obtener(pos.i, nuevaY) === null) {
+        this.matriz.colocar(pos.i, nuevaY, 'balaNave');
+        console.log("Jugador disparó bala matricial en:", pos.i, nuevaY);
+      }
     }
   }
 
-  mover(direccion) 
-    {const pos = this.encontrarNave();
+  mover(direccion) {
+    const pos = this.encontrarNave();
     if (pos) {
       const nuevaX = pos.i + direccion;
       const j = pos.j;
@@ -44,14 +53,42 @@ export default class Player {
         this.matriz.colocar(pos.i, j, null);
         this.matriz.colocar(nuevaX, j, 'nave');
 
-        if (direccion === -1) {
-            this.imagenActual = 'assets/nave_izquierda.png';
-        } else {
-            this.imagenActual = 'assets/nave_derecha.png';
-        }
+        this.imagenActual = direccion === -1
+          ? 'assets/nave_izquierda.png'
+          : 'assets/nave_derecha.png';
+      }
+    }
+  }
+
+  // nuevo método para recibir daño
+  recibirImpacto() {
+    this.vida--;
+    console.log("La nave recibió un impacto. Vida restante:", this.vida);
+
+    const vidasElement = document.getElementById("vidas");
+    if (vidasElement) {
+      vidasElement.textContent = "Vidas: " + this.vida;
+  }
+
+
+    if (this.vida <= 0) {
+      console.log("¡Game Over! La nave ha sido destruida.");
+      // aquí puedes reiniciar el juego, mostrar pantalla de derrota, etc.
+      const pos = this.encontrarNave();
+      if (pos) {
+        this.matriz.colocar(pos.i, pos.j, null);
+
+      window.location.href = "gameover.html";
       }
     }
   }
 }
 
-  
+
+
+
+
+
+
+
+
