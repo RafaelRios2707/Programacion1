@@ -132,11 +132,13 @@ function moverBalas(tipo, direccion) {
           continue;
         }
         if (tipo === 'balaAlien' && destino === 'nave') {
+          // eliminar la bala que impactó
           matriz.colocar(i, j, null);
-          matriz.colocar(i, nuevaY, null);
-          player.recibirImpacto(); // ahora baja vida en vez de eliminar nave directamente
+          // NO eliminar la nave, solo bajar vida
+          player.recibirImpacto();
           continue;
-        }
+}
+
 
 
         if (destino === null) {
@@ -178,6 +180,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
