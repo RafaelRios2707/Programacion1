@@ -2,17 +2,55 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GAME OVER</title>
+  <title>CAMBAS INVADERS — GAME OVER</title>
   <link rel="stylesheet" href="estilo.css">
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: 'Press Start 2P', monospace;
+      text-align: center;
+      padding-top: 80px;
+    }
+    h1 {
+      color: red;
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 16px;
+      margin-bottom: 40px;
+    }
+    .botones button {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      margin: 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .botones button:hover {
+      background-color: darkred;
+    }
+    .footer {
+      margin-top: 80px;
+      font-size: 10px;
+      color: gray;
+    }
+  </style>
 </head>
 <body>
-  <div class="menu">
-    <h1>💀 GAME OVER 💀</h1>
-    <p>Te quedaste acopaibau.</p>
-    <button onclick="location.href='index.html'">VOLVER AL INICIO</button>
-    <button onclick="location.href='game.html'">REINTENTAR</button>
+  <h1>¡HAS SIDO DERROTADO!</h1>
+  <p>Los invasores han tomado el control... pero aún puedes intentarlo de nuevo.</p>
+
+  <div class="botones">
+    <button onclick="location.href='game.html?nivel=1'">REINTENTAR</button>
+    <button onclick="location.href='index.html'">MENÚ PRINCIPAL</button>
+  </div>
+
+  <div class="footer">
+    © 2023 CAMBAS INVADERS — PENROSKY GAMES
   </div>
 </body>
 </html>
-
