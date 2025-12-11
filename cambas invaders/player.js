@@ -61,7 +61,7 @@ export default class Player {
   }
 
   // nuevo método para recibir daño
-  recibirImpacto() {
+recibirImpacto() {
   this.vida--;
   console.log("La nave recibió un impacto. Vida restante:", this.vida);
 
@@ -81,19 +81,6 @@ export default class Player {
 }
 
 
-
-    if (this.vida <= 0) {
-      console.log("¡Game Over! La nave ha sido destruida.");
-      // aquí puedes reiniciar el juego, mostrar pantalla de derrota, etc.
-      const pos = this.encontrarNave();
-      if (pos) {
-        this.matriz.colocar(pos.i, pos.j, null);
-
-      window.location.href = "gameover.html";
-      }}
-    }
-  }
-}
 
 
 
