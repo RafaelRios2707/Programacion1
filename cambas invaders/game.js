@@ -96,7 +96,7 @@ class Matriz {
       }
     }
   }
-}
+
 
 function iniciarJuego() {
   matriz = new Matriz(filas, columnas);
@@ -210,6 +210,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
