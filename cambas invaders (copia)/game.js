@@ -1,3 +1,5 @@
+console.log("game.js cargado correctamente");
+
 import Player from "./player.js";
 import Enemigo from "./enemigo.js";
 
@@ -17,14 +19,21 @@ let fondoCargado = false;
 alienImg.src = 'assets/alien.png';
 fondoImg.src = 'assets/fondo.png';
 
-alienImg.onload = () => { alienCargado = true; verificarCarga(); };
-fondoImg.onload = () => { fondoCargado = true; verificarCarga(); };
+alienImg.onload = () => {
+  alienCargado = true;
+  verificarCarga();
+};
+fondoImg.onload = () => {
+  fondoCargado = true;
+  verificarCarga();
+};
 
 let matriz;
-let balasNave = [];
-let balasAlien = [];
 let player;
 let enemigo;
+
+// contador de frames para controlar velocidad de balas
+let frameCount = 0;
 
 function verificarCarga() {
   if (alienCargado && fondoCargado) {
@@ -66,6 +75,12 @@ class Matriz {
           ctx.drawImage(naveImg, px, py, celdaSize, celdaSize);
         } else if (tipo === 'alien' && alienCargado) {
           ctx.drawImage(alienImg, px, py, celdaSize, celdaSize);
+        } else if (tipo === 'balaNave') {
+          ctx.fillStyle = "white";
+          ctx.fillRect(px + celdaSize/2 - 5, py + 10, 10, 20);
+        } else if (tipo === 'balaAlien') {
+          ctx.fillStyle = "red";
+          ctx.fillRect(px + celdaSize/2 - 5, py + 10, 10, 20);
         }
       }
     }
@@ -74,29 +89,73 @@ class Matriz {
 
 function iniciarJuego() {
   matriz = new Matriz(filas, columnas);
-  player = new Player(matriz, columnas, filas, celdaSize, balasNave);
-  enemigo = new Enemigo(matriz, filas, columnas, celdaSize, balasAlien);
 
-  setInterval(() => enemigo.disparar(), 500);
+  player = new Player(matriz, columnas, filas, celdaSize);
+  enemigo = new Enemigo(matriz, filas, columnas, celdaSize);
+
+  // disparo cada 5 segundos
+  setInterval(() => {
+    enemigo.disparar();
+  }, 1000);
+
   gameLoop();
 }
 
 document.addEventListener('keydown', (e) => {
-  if (e.code === 'Space' || e.code === ' ') {
-    player.disparar();
-
-    const carnet = prompt("Ingrese su carnet");
-    if (carnet % 2 === 0) {
-      console.log("El carnet es par");
-    } else {
-      console.log("El carnet es impar");
-    }
-  } else if (e.code === 'ArrowLeft') {
+  if (e.code === 'ArrowLeft') {
     player.mover(-1);
   } else if (e.code === 'ArrowRight') {
     player.mover(1);
+  } else if (e.code === 'Space') {
+    player.disparar();
   }
 });
+
+function moverBalas(tipo, direccion) {
+  const movimientos = [];
+
+  for (let j = 0; j < filas; j++) {
+    for (let i = 0; i < columnas; i++) {
+      if (matriz.obtener(i, j) === tipo) {
+        const nuevaY = j + direccion;
+
+        if (!matriz.enRango(i, nuevaY)) {
+          matriz.colocar(i, j, null);
+          continue;
+        }
+
+        const destino = matriz.obtener(i, nuevaY);
+
+        if (tipo === 'balaNave' && destino === 'alien') {
+          matriz.colocar(i, j, null);
+          matriz.colocar(i, nuevaY, null);
+          continue;
+        }
+        if (tipo === 'balaAlien' && destino === 'nave') {
+          // eliminar la bala que impactó
+          matriz.colocar(i, j, null);
+          // NO eliminar la nave, solo bajar vida
+          player.recibirImpacto();
+          continue;
+}
+
+
+
+        if (destino === null) {
+          movimientos.push({ fromX: i, fromY: j, toX: i, toY: nuevaY, tipo });
+        } else if (destino === 'balaNave' || destino === 'balaAlien') {
+          matriz.colocar(i, j, null);
+          matriz.colocar(i, nuevaY, null);
+        }
+      }
+    }
+  }
+
+  for (const m of movimientos) {
+    matriz.colocar(m.fromX, m.fromY, null);
+    matriz.colocar(m.toX, m.toY, m.tipo);
+  }
+}
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -109,11 +168,43 @@ function gameLoop() {
     matriz.dibujar(ctx);
   }
 
-  balasNave.forEach(b => { b.mover(); b.dibujar(ctx); });
-  balasAlien.forEach(b => { b.mover(); b.dibujar(ctx); });
+  enemigo.mover();
 
-  balasNave = balasNave.filter(b => !b.fueraDelCanvas(canvas));
-  balasAlien = balasAlien.filter(b => !b.fueraDelCanvas(canvas));
+  // mover balas cada 5 frames para que sean más lentas
+  if (frameCount % 5 === 0) {
+    moverBalas('balaNave', -1);
+    moverBalas('balaAlien', 1);
+  }
+
+  frameCount++;
+
+  // 🔎 comprobar si quedan aliens
+  let quedanAliens = false;
+  for (let j = 0; j < filas; j++) {
+    for (let i = 0; i < columnas; i++) {
+      if (matriz.obtener(i, j) === 'alien') {
+        quedanAliens = true;
+        break;
+      }
+    }
+    if (quedanAliens) break;
+  }
+
+  // si no quedan aliens, pasar a game2.html
+  if (!quedanAliens) {
+    window.location.href = "game2.html";
+    return; // detener el loop
+  }
 
   requestAnimationFrame(gameLoop);
 }
+
+
+
+
+
+
+
+
+
+
