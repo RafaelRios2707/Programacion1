@@ -170,7 +170,7 @@ function gameLoop() {
 
   enemigo.mover();
 
-  // mover balas cada 3 frames para que sean más lentas
+  // mover balas cada 5 frames para que sean más lentas
   if (frameCount % 5 === 0) {
     moverBalas('balaNave', -1);
     moverBalas('balaAlien', 1);
@@ -178,8 +178,28 @@ function gameLoop() {
 
   frameCount++;
 
+  // 🔎 comprobar si quedan aliens
+  let quedanAliens = false;
+  for (let j = 0; j < filas; j++) {
+    for (let i = 0; i < columnas; i++) {
+      if (matriz.obtener(i, j) === 'alien') {
+        quedanAliens = true;
+        break;
+      }
+    }
+    if (quedanAliens) break;
+  }
+
+  // si no quedan aliens, pasar a game2.html
+  if (!quedanAliens) {
+    window.location.href = "game2.html";
+    return; // detener el loop
+  }
+
   requestAnimationFrame(gameLoop);
 }
+
+
 
 
 
