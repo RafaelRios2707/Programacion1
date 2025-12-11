@@ -9,7 +9,7 @@ export default class Enemigo {
     this.shotCooldown = 1000; // milisegundos
 
     // colocar algunos aliens iniciales
-    for (let k = 5; k > 0; k--) {
+    for (let k = 10; k > 0; k--) {
       const i = Math.floor(Math.random() * columnas);
       const j = Math.floor(Math.random() * (filas - 7));
       if (!this.matriz.obtener(i, j)) {
@@ -75,6 +75,7 @@ export default class Enemigo {
     }
   }
 }
+
 
 
 
