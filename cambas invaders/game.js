@@ -182,6 +182,7 @@ function gameLoop() {
 
 
   requestAnimationFrame(gameLoop);
-}
+}}
+
 
 
