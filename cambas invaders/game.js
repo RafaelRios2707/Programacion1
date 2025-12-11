@@ -70,9 +70,7 @@ class Matriz {
         const py = j * celdaSize;
 
         if (tipo === 'nave') {
-          const naveImg = new Image();
-          naveImg.src = config.nave;
-          ctx.drawImage(naveImg, px, py, celdaSize, celdaSize);
+          ctx.drawImage(player.imagenActual, px, py, celdaSize, celdaSize);
         } else if (tipo === 'alien' && alienCargado) {
           ctx.drawImage(alienImg, px, py, celdaSize, celdaSize);
         } else if (tipo === 'balaNave') {
@@ -180,24 +178,10 @@ function gameLoop() {
     for (let i = 0; i < columnas; i++) {
       if (matriz.obtener(i, j) === 'alien') {
         quedanAliens = true;
-        break;
-      }
-    }
-    if (quedanAliens) break;
-  }
-
-  // si no quedan aliens, pasar al siguiente nivel
-  if (!quedanAliens) {
-    const siguienteNivel = nivelActual + 1;
-    if (niveles[siguienteNivel]) {
-      window.location.href = `game.html?nivel=${siguienteNivel}`;
-    } else {
-      window.location.href = "gameover.html"; // si ya no hay más niveles
-    }
-    return;
-  }
+        break
 
 
   requestAnimationFrame(gameLoop);
 }
+
 
