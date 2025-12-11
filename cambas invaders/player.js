@@ -77,10 +77,15 @@ export default class Player {
       const pos = this.encontrarNave();
       if (pos) {
         this.matriz.colocar(pos.i, pos.j, null);
+
+      window.location.href = "gameover.html";
+  }
+
       }
     }
   }
 }
+
 
 
 
