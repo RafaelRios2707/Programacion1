@@ -34,6 +34,10 @@ balaEnemigaImg.onload = () => { balaEnemigaCargada = true; };
 const somoAudio = new Audio("assets/somo.mp3");
 const vasoAudio = new Audio("assets/vaso.mp3");
 
+const musicaFondo = new Audio("assets/fondo.mp3");
+musicaFondo.loop = true;
+musicaFondo.volume = 0.5;
+
 let alienCargado = false;
 let fondoCargado = false;
 
@@ -103,6 +107,9 @@ function iniciarJuego() {
 
   player = new Player(matriz, columnas, filas, celdaSize);
   enemigo = new Enemigo(matriz, filas, columnas, celdaSize, config.cantidadAliens);
+
+  musicaFondo.currentTime = 0;
+  musicaFondo.play().catch(err => console.log("Autoplay bloqueado:", err));
 
   // disparo cada 2.5 segundos
   setInterval(() => {
@@ -213,6 +220,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
