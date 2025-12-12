@@ -7,6 +7,16 @@ export const niveles = {
     velocidadAlien: 1,
     cantidadAliens: 5
   },
+  
+  1: {
+    fondo: "assets/fondo.png",
+    alien: "assets/alien.png",
+    nave: "assets/nave_derecha.png",
+    velocidadBalas: 5,
+    velocidadAlien: 1,
+    cantidadAliens: 5
+  },
+  
   2: {
     fondo: "assets/fondo2.png",
     alien: "assets/alien2.png",
