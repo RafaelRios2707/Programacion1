@@ -6,6 +6,7 @@ export default class Player {
     this.celdaSize = celdaSize;
 
     this.somoAudio = new Audio("assets/somo.mp3");
+    this.somoAudio.volume=0.5;
 
     // vida inicial del jugador
     this.vida = 6;
@@ -87,6 +88,7 @@ export default class Player {
     }
   }
 }
+
 
 
 
