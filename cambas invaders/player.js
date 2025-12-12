@@ -44,6 +44,8 @@ export default class Player {
         console.log("Jugador disparó bala matricial en:", pos.i, nuevaY);
       }
     }
+    somoAudio.currentTime = 0;
+    somoAudio.play().catch(err => console.log("Autoplay bloqueado:", err));
   }
 
   mover(direccion) {
@@ -83,3 +85,4 @@ export default class Player {
     }
   }
 }
+
