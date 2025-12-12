@@ -6,51 +6,115 @@
   <link rel="stylesheet" href="estilo.css">
   <style>
     body {
-      background-color: black;
+      background: url('assets/fondoover.png') no-repeat center center fixed;
+      background-size: cover;
       color: white;
       font-family: 'Press Start 2P', monospace;
       text-align: center;
       padding-top: 80px;
     }
-    h1 {
-      color: red;
-      font-size: 36px;
+    .titulo img {
+      width: 400px;
+      max-width: 90%;
       margin-bottom: 20px;
     }
-    p {
+    .mensaje {
       font-size: 16px;
       margin-bottom: 40px;
+      text-shadow: 2px 2px 4px black;
     }
-    .botones button {
-      background-color: red;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      margin: 10px;
-      font-size: 14px;
+    .botones {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .botones img {
       cursor: pointer;
+      width: 180px;
+      transition: transform 0.2s ease;
     }
-    .botones button:hover {
-      background-color: darkred;
+    .botones img:hover {
+      transform: scale(1.05);
     }
     .footer {
       margin-top: 80px;
       font-size: 10px;
       color: gray;
     }
+    table {
+      margin: 0 auto;
+      background-color: black;
+      color: white;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    th, td {
+      border: 1px solid white;
+      padding: 6px 12px;
+    }
+    input[type="text"] {
+      padding: 6px;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    button[type="submit"] {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    button[type="submit"]:hover {
+      background-color: darkred;
+    }
   </style>
 </head>
 <body>
-  <h1>¡VICTORIA!</h1>
-  <p>Has defendido el cambas con honor. Los invasores han sido derrotados.</p>
+  <div class="titulo">
+    <img src="assets/gameover.png" alt="Victoria">
+  </div>
+
+  <p class="mensaje">¡Has derrotado a los invasores! El universo te agradece.</p>
+
+  <p>Tu puntaje final es: <span id="puntaje-final"></span></p>
+
+  <form id="form-puntaje">
+    <label for="nombre-jugador">Ingresa tu nombre:</label><br>
+    <input type="text" id="nombre-jugador" required><br>
+    <button type="submit">Guardar puntaje</button>
+  </form>
+
+  <h3>Clasificaciones</h3>
+  <table id="tabla-clasificaciones"></table>
 
   <div class="botones">
-    <button onclick="location.href='game.html?nivel=1'">VOLVER A JUGAR</button>
-    <button onclick="location.href='index.html'">MENÚ PRINCIPAL</button>
+    <img src="assets/volver.png" alt="Reintentar" onclick="location.href='game.html?nivel=1'">
+    <img src="assets/menú.png" alt="Menú Principal" onclick="location.href='index.html'">
   </div>
 
   <div class="footer">
-    © 2023 CAMBAS INVADERS — PERROSKY GAMES
+    © 2023 CAMBAS INVADERS — PENROSKY GAMES
   </div>
+
+  <audio id="gameover-audio">
+    <source src="assets/gameover.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
+  <script src="puntaje.js"></script>
+  <script>
+    window.addEventListener("click", () => {
+      const audio = document.getElementById("gameover-audio");
+      if (audio.paused) {
+        audio.play().catch(err => {
+          console.log("Error al reproducir el audio:", err);
+        });
+      }
+    });
+  </script>
 </body>
 </html>
