@@ -175,16 +175,13 @@ function moverBalas(tipo, direccion) {
   }
 }
 
+const secuenciaNiveles = [1, 2, 4];
+
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  if (fondoCargado) {
-    ctx.drawImage(fondoImg, 0, 0, canvas.width, canvas.height);
-  }
-
-  if (matriz) {
-    matriz.dibujar(ctx);
-  }
+  if (fondoCargado) ctx.drawImage(fondoImg, 0, 0, canvas.width, canvas.height);
+  if (matriz) matriz.dibujar(ctx);
 
   enemigo.mover();
 
@@ -195,6 +192,7 @@ function gameLoop() {
 
   frameCount++;
 
+  // comprobar si quedan aliens
   let quedanAliens = false;
   for (let j = 0; j < filas; j++) {
     for (let i = 0; i < columnas; i++) {
@@ -206,16 +204,14 @@ function gameLoop() {
     if (quedanAliens) break;
   }
 
-  u=1
+  // avanzar nivel de forma simple
   if (!quedanAliens) {
-    const siguienteNivel = nivelActual + u;
-    if (niveles[siguienteNivel]) {
+    const siguienteNivel = secuenciaNiveles.find(n => n > nivelActual);
+    if (siguienteNivel) {
       window.location.href = `game.html?nivel=${siguienteNivel}`;
-      u=u+1
     } else {
       window.location.href = "gamewin.html";
     }
-    u=U
     return;
   }
 
