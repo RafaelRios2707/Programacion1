@@ -8,7 +8,7 @@ export const niveles = {
     cantidadAliens: 5
   },
   
-  1: {
+  1.5: {
     fondo: "assets/fondo.png",
     alien: "assets/alien.png",
     nave: "assets/nave_derecha.png",
