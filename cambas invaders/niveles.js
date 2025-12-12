@@ -8,7 +8,7 @@ export const niveles = {
     cantidadAliens: 5
   },
   
-  1.5: {
+  2: {
     fondo: "assets/fondo.png",
     alien: "assets/alien.png",
     nave: "assets/nave_derecha.png",
@@ -17,7 +17,7 @@ export const niveles = {
     cantidadAliens: 5
   },
   
-  2: {
+  3: {
     fondo: "assets/fondo2.png",
     alien: "assets/alien2.png",
     nave: "assets/nave_lvl2.png",
@@ -25,7 +25,7 @@ export const niveles = {
     velocidadAlien: 2,
     cantidadAliens: 8
   },
-  3: {
+  4: {
     fondo: "assets/fondo3.png",
     alien: "assets/alien3.png",
     nave: "assets/nave_lvl3.png",
