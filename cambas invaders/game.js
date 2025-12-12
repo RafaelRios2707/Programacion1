@@ -125,8 +125,6 @@ document.addEventListener('keydown', (e) => {
   } else if (e.code === 'ArrowRight') {
     player.mover(1);
     // reproducir somo.mp3 al mover a la derecha
-    somoAudio.currentTime = 0;
-    somoAudio.play().catch(err => console.log("Autoplay bloqueado:", err));
   } else if (e.code === 'Space') {
     player.disparar();
   }
@@ -220,6 +218,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
