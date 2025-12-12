@@ -61,22 +61,30 @@
   </div>
   <div class="footer">© 2025 CAMBA'S INVADERS — PERROSKY GAMES</div>
   
-  <audio id="index-audio">
-    <source src="assets/index.mp3" type="audio/mpeg">
-    Tu navegador no soporta audio HTML5.
-  </audio>
+<audio id="index-audio" autoplay preload="auto">
+  <source src="assets/index.mp3" type="audio/mpeg">
+  Tu navegador no soporta audio HTML5.
+</audio>
 
-  <script>
-    window.addEventListener("click", () => {
-      const audio = document.getElementById("index-audio");
-      if (audio.paused) {
-        audio.play().catch(err => {
-          console.log("Error al reproducir el audio:", err);
-        });
-      }
-    });
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const audio = document.getElementById("index-audio");
+    audio.volume = 1; // opcional: ajusta volumen
+  });
+
+  window.addEventListener("click", () => {
+    const audio = document.getElementById("index-audio");
+    if (audio.paused) {
+      audio.play().catch(err => {
+        console.log("Error al reproducir el audio:", err);
+      });
+    }
+  });
+</script>
+
 </body>
 </html>
+
 
 
 
