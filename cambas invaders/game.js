@@ -175,7 +175,7 @@ function moverBalas(tipo, direccion) {
   }
 }
 
-const secuenciaNiveles = [1, 2, 4];
+const secuenciaNiveles = [1, 3, 4];
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -217,6 +217,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
