@@ -206,18 +206,22 @@ function gameLoop() {
     if (quedanAliens) break;
   }
 
+  u=1
   if (!quedanAliens) {
-    const siguienteNivel = nivelActual + 1;
+    const siguienteNivel = nivelActual + u;
     if (niveles[siguienteNivel]) {
       window.location.href = `game.html?nivel=${siguienteNivel}`;
+      u=u+1
     } else {
       window.location.href = "gamewin.html";
     }
+    u=U
     return;
   }
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
