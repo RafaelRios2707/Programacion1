@@ -31,7 +31,7 @@ balaEnemigaImg.src = "assets/coca.png";
 balaEnemigaImg.onload = () => { balaEnemigaCargada = true; };
 
 // audios
-const somoAudio = new Audio("assets/somo.mp3");
+
 const vasoAudio = new Audio("assets/vaso.mp3");
 
 const musicaFondo = new Audio("assets/fondo.mp3");
@@ -218,6 +218,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
+
 
 
 
